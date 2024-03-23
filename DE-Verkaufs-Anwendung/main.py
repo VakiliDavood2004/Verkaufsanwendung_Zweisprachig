@@ -70,3 +70,46 @@ class MainWindow(QMainWindow):
         self.add_submenu(tools_menu, "🔢 Steuer-/Rabattrechner", self.show_calculator_tool)
         self.add_submenu(tools_menu, "💬 Kundenfeedback-Formular", self.show_feedback_form)
         self.add_submenu(help_menu, "❓ Hilfe anzeigen", self.show_help_module)
+
+        # Werkzeuge
+        self.add_submenu(tools_menu, "🧠 Erweiterter Rechner", self.show_advanced_calculator)
+
+        # Uhr und Kalender in der unteren rechten Ecke
+        self.clock_frame = QFrame(self)
+        self.clock_frame.resize(200, 250)
+        layout = QVBoxLayout(self.clock_frame)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.addWidget(clock_calendar_widget.AnalogClock())
+        layout.addWidget(clock_calendar_widget.CalendarLabel())
+        self.clock_frame.setLayout(layout)
+        self.clock_frame.setStyleSheet("""
+            background-color: #fdfdfd;
+            border: 2px solid #bdc3c7;
+            border-radius: 10px;
+        """)
+        self.update_clock_position()
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self.update_clock_position()
+
+    def update_clock_position(self):
+        x = self.width() - self.clock_frame.width() - 10
+        y = self.height() - self.clock_frame.height() - 10
+        self.clock_frame.move(x, y)
+        self.clock_frame.raise_()
+
+    def add_submenu(self, menu, title, method=None):
+        action = QAction(title, self)
+        if method:
+            action.triggered.connect(method)
+        else:
+            action.triggered.connect(lambda: print(f"Operationen '{title}' Noch nicht definiert!"))
+        menu.addAction(action)
+
+    def show_subwindow(self, widget):
+        subwindow = QMdiSubWindow()
+        subwindow.setWidget(widget)
+        subwindow.setWindowTitle(widget.windowTitle())
+        self.mdi_area.addSubWindow(subwindow)
+        subwindow.show()
