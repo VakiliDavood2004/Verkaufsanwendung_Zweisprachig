@@ -70,6 +70,7 @@ class MainWindow(QMainWindow):
         self.add_submenu(tools_menu, "🔢 Steuer-/Rabattrechner", self.show_calculator_tool)
         self.add_submenu(tools_menu, "💬 Kundenfeedback-Formular", self.show_feedback_form)
         self.add_submenu(help_menu, "❓ Hilfe anzeigen", self.show_help_module)
+        
 
         # Werkzeuge
         self.add_submenu(tools_menu, "🧠 Erweiterter Rechner", self.show_advanced_calculator)
@@ -113,3 +114,45 @@ class MainWindow(QMainWindow):
         subwindow.setWindowTitle(widget.windowTitle())
         self.mdi_area.addSubWindow(subwindow)
         subwindow.show()
+
+    def show_product_module(self): self.show_subwindow(product_module.ProductForm())
+    def show_delete_product_module(self): self.show_subwindow(delete_product_module.DeleteProductForm())
+    def show_product_list(self): self.show_subwindow(product_list_module.ProductList())
+    def show_service_module(self): self.show_subwindow(service_module.ServiceForm())
+    def show_service_manager(self): self.show_subwindow(service_manager_module.ServiceManager())
+    def show_order_module(self): self.show_subwindow(order_module.OrderForm())
+    def show_order_manager(self): self.show_subwindow(order_manager_module.OrderManager())
+    def show_invoice_module(self): self.show_subwindow(invoice_module.InvoiceForm())
+    def show_report_module(self): self.show_subwindow(report_module.ReportForm())
+    def show_sales_analysis(self): self.show_subwindow(sales_analysis_module.SalesAnalysis())
+    def show_user_module(self): self.show_subwindow(user_module.User_Form())
+    def show_customer_module(self): self.show_subwindow(customer_module.CustomerForm())
+    def show_customer_manager(self): self.show_subwindow(customer_manager_module.CustomerManager())
+    def show_chat_window(self): self.show_subwindow(chat_module.ChatWidget())
+    def show_notepad(self): self.show_subwindow(notepad_module.Notepad())
+    def show_checklist(self): self.show_subwindow(checklist_module.Checklist())
+    def show_calculator_tool(self): self.show_subwindow(discount_tax_calculator.DiscountTaxCalculator())
+    def show_feedback_form(self): self.show_subwindow(feedback_form_module.FeedbackForm())
+    def show_help_module(self):
+        help_window = help_module.HelpForm()
+        help_window.exec_()
+    def show_advanced_calculator(self): self.show_subwindow(advanced_calculator_module.AdvancedCalculator())
+
+    def close_program(self): 
+        sys.exit()
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec())
+
+
+
+
+
+# cd F:\all files\New_folder\main.py
+# pip install pyinstaller
+# pyinstaller --onefile --windowed your_script.py
+# pyinstaller --onefile --windowed --icon=your_icon.ico main.py
+# pyinstaller --onefile --windowed --icon=icon.ico main.py
