@@ -42,3 +42,23 @@ class User_Form(QWidget):
                                 user_name TEXT,
                                 password TEXT)''')
         self.conn.commit()
+
+    def saveData(self):
+        user_name = self.input1.text()
+        password = self.input2.text()
+
+        if user_name and password:
+            self.cursor.execute("INSERT INTO user_pass (user_name, password) VALUES (?, ?)", (user_name, password))
+            self.conn.commit()
+            print("Daten erfolgreich gespeichert")
+
+            self.input1.clear() 
+            self.input2.clear()  
+        else:
+            print("Bitte geben Sie Ihren Benutzernamen und Ihr Passwort ein.!")
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = User_Form()
+    window.show()
+    sys.exit(app.exec_())
