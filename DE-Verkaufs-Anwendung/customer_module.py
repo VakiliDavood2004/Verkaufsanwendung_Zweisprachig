@@ -25,3 +25,16 @@ class CustomerForm(QWidget):
         main_layout.addWidget(submit_button)
         self.setLayout(main_layout)
 
+    def init_db(self):
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS customers (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                phone TEXT NOT NULL,
+                address TEXT
+            )
+        """)
+        conn.commit()
+        conn.close()
