@@ -38,3 +38,32 @@ class CustomerForm(QWidget):
         """)
         conn.commit()
         conn.close()
+
+    def submit_data(self):
+        name = self.name_input.text()
+        phone = self.phone_input.text()
+        address = self.address_input.text()
+
+        if not name or not phone:
+            QMessageBox.warning(self, "Fehler", "Kundenname und Telefonnummer dürfen nicht leer sein!")
+            return
+
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO customers (name, phone, address) VALUES (?, ?, ?)",
+                       (name, phone, address))
+        conn.commit()
+        conn.close()
+
+        QMessageBox.information(self, "Erfolg!", "Der Kunde wurde erfolgreich registriert.")
+
+        # Formularfelder löschen
+        self.name_input.clear()
+        self.phone_input.clear()
+        self.address_input.clear()
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = CustomerForm()
+    window.show()
+    sys.exit(app.exec())
