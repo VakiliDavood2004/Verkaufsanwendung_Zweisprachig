@@ -37,6 +37,7 @@ class CustomerManager(QWidget):
 
         self.setLayout(layout)
         self.load_customers()  
+
     def load_customers(self):
         """ Abrufen der Kundenliste aus der Datenbank """
         conn = sqlite3.connect("sales.db")
@@ -84,3 +85,30 @@ class CustomerManager(QWidget):
 
         QMessageBox.information(self, "Erfolg! ✅", "Der Kunde wurde erfolgreich bearbeitet.")
         self.load_customers()
+
+    def delete_customer(self):
+        """ Kunden aus der Datenbank löschen """
+        selected_row = self.table.currentRow()
+        if selected_row == -1:
+            QMessageBox.warning(self, "Fehler ⚠️", "Bitte wählen Sie einen Kunden aus!")
+            return
+
+        customer_id = self.customer_data[selected_row]
+
+        reply = QMessageBox.question(self, "Löschung bestätigen ⚠️", "Sind Sie sicher, dass Sie diesen Kunden löschen möchten?",
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            conn = sqlite3.connect("sales.db")
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM customers WHERE id=?", (customer_id,))
+            conn.commit()
+            conn.close()
+
+            QMessageBox.information(self, "Erfolg! ✅", "Der Kunde wurde erfolgreich gelöscht.")
+            self.load_customers() 
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = CustomerManager()
+    window.show()
+    sys.exit(app.exec())
