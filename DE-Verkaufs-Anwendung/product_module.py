@@ -44,4 +44,22 @@ class ProductForm(QWidget):
         """)
         conn.commit()
         conn.close()
+    def submit_data(self):
+        name = self.name_input.text()
+        price = self.price_input.text()
+        category = self.category_input.currentText()
+        description = self.description_input.text()
+
+        if not name or not price:
+            QMessageBox.warning(self, "Fehler", "Artikelname und Preis dürfen nicht leer sein!")
+            return
+
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO products (name, price, category, description) VALUES (?, ?, ?, ?)",
+                       (name, price, category, description))
+        conn.commit()
+        conn.close()
+        # cursor.execute("INSERT INTO products (name, price, category, description) VALUES ('Item One', 130, 'Raw Materials', 'For testing purposes')
+        QMessageBox.information(self, "Success!", "The item has been successfully registered.")
 
