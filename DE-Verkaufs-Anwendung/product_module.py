@@ -44,6 +44,7 @@ class ProductForm(QWidget):
         """)
         conn.commit()
         conn.close()
+
     def submit_data(self):
         name = self.name_input.text()
         price = self.price_input.text()
@@ -63,3 +64,13 @@ class ProductForm(QWidget):
         # cursor.execute("INSERT INTO products (name, price, category, description) VALUES ('Item One', 130, 'Raw Materials', 'For testing purposes')
         QMessageBox.information(self, "Success!", "The item has been successfully registered.")
 
+        # Formularfelder nach der Registrierung löschen
+        self.name_input.clear()
+        self.price_input.clear()
+        self.description_input.clear()
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = ProductForm()
+    window.show()
+    sys.exit(app.exec())
