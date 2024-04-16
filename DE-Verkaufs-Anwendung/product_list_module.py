@@ -23,3 +23,21 @@ class ProductList(QWidget):
         self.setLayout(layout)
         self.load_products()  # Methode beim Programmstart aufrufen, um Informationen anzuzeigen
 
+    def load_products(self):
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT name, price, category, description FROM products")
+        products = cursor.fetchall()
+        conn.close()
+
+        self.table.setRowCount(len(products))  # Anzahl der Zeilen festlegen
+
+        for row, product in enumerate(products):
+            for col, item in enumerate(product):
+                self.table.setItem(row, col, QTableWidgetItem(str(item)))  # Jede Zelle initialisieren
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = ProductList()
+    window.show()
+    sys.exit(app.exec())
