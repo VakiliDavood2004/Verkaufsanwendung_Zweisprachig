@@ -21,3 +21,18 @@ class DeleteProductForm(QWidget):
         main_layout.addLayout(form_layout)
         main_layout.addWidget(delete_button)
         self.setLayout(main_layout)
+    def delete_product(self):
+        product_id = self.product_id_input.text()
+
+        if not product_id.isdigit():
+            QMessageBox.warning(self, "Fehler", "Bitte geben Sie eine gültige ID ein!")
+            return
+        
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+
+        cursor.execute("DELETE FROM products WHERE id=?", (product_id,))
+        conn.commit()
+        affected_rows = cursor.rowcount
+        conn.close()
+
