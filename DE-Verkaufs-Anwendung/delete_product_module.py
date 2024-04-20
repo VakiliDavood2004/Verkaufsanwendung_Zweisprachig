@@ -21,6 +21,7 @@ class DeleteProductForm(QWidget):
         main_layout.addLayout(form_layout)
         main_layout.addWidget(delete_button)
         self.setLayout(main_layout)
+
     def delete_product(self):
         product_id = self.product_id_input.text()
 
@@ -36,3 +37,14 @@ class DeleteProductForm(QWidget):
         affected_rows = cursor.rowcount
         conn.close()
 
+        if affected_rows > 0:
+            QMessageBox.information(self, "Erfolg", "Das Element wurde erfolgreich gelöscht!")
+            self.product_id_input.clear()
+        else:
+            QMessageBox.warning(self, "Fehler", "Kein Element mit dieser ID gefunden!")
+            
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = DeleteProductForm()
+    window.show()
+    sys.exit(app.exec())
