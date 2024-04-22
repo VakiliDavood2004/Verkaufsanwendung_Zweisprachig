@@ -63,3 +63,76 @@ class OrderForm(QWidget):
         self.update_product_info()
         self.update_customer_info()
         self.update_service_info()
+    def init_db(self):
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS orders (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                product TEXT NOT NULL,
+                product_price REAL NOT NULL,
+                product_quantity INTEGER NOT NULL,
+                customer TEXT NOT NULL,
+                customer_phone TEXT NOT NULL,
+                customer_address TEXT NOT NULL,
+                service TEXT NOT NULL,
+                service_price REAL NOT NULL,
+                total_price REAL NOT NULL,
+                order_date TEXT NOT NULL
+            )
+        """)
+        conn.commit()
+        conn.close()
+
+    def get_products(self):
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT name, price FROM products")
+        data = cursor.fetchall()
+        conn.close()
+        return data if data else [("Keine Artikel verfügbar", "0")]
+
+    def get_customers(self):
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT name, phone, address FROM customers")
+        data = cursor.fetchall()
+        conn.close()
+        return data if data else [("Kein Kunde verfügbar", "---", "---")]
+
+    def get_services(self):
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT name, price FROM services")
+        data = cursor.fetchall()
+        conn.close()
+        return data if data else [("Keine Services verfügbar", "0")]
+
+    def update_product_info(self):
+        selected_index = self.product_select.currentIndex()
+        selected_product = self.products[selected_index]
+        self.current_product_price = float(selected_product[1])
+        self.product_price.setText(f"💰 Produktpreis: {selected_product[1]} Euros")
+        self.calculate_total_price()
+
+    def update_customer_info(self):
+        selected_index = self.customer_select.currentIndex()
+        selected_customer = self.customers[selected_index]
+        self.customer_phone.setText(f"📞 Telefonnummer: {selected_customer[1]}")
+        self.customer_address.setText(f"📍 Adresse: {selected_customer[2]}")
+
+    def update_service_info(self):
+        selected_index = self.service_select.currentIndex()
+        selected_service = self.services[selected_index]
+        self.current_service_price = float(selected_service[1])
+        self.service_price.setText(f"💰 Servicepreis: {selected_service[1]} Euro")
+        self.calculate_total_price()
+
+    def calculate_total_price(self):
+        try:
+            quantity = int(self.product_quantity.text() or 0)
+            total = (self.current_product_price * quantity) + self.current_service_price
+            self.total_price.setText(f"💳 Gesamtpreis: {total} Euro")
+        except ValueError:
+            self.total_price.setText("💳 Gesamtpreis: ---")
+
