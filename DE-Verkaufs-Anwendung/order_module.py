@@ -63,6 +63,7 @@ class OrderForm(QWidget):
         self.update_product_info()
         self.update_customer_info()
         self.update_service_info()
+
     def init_db(self):
         conn = sqlite3.connect("sales.db")
         cursor = conn.cursor()
@@ -136,3 +137,42 @@ class OrderForm(QWidget):
         except ValueError:
             self.total_price.setText("💳 Gesamtpreis: ---")
 
+    def submit_order(self):
+        try:
+            if self.product_quantity.text() == "":
+                QMessageBox.warning(self, "⚠️ Fehler", "Bitte geben Sie die Artikelmenge ein!")
+                return
+
+            quantity = int(self.product_quantity.text())
+            total = (self.current_product_price * quantity) + self.current_service_price
+            order_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            conn = sqlite3.connect("sales.db")
+            cursor = conn.cursor()
+            cursor.execute("""
+                INSERT INTO orders (product, product_price, product_quantity, customer,
+                                    customer_phone, customer_address, service, service_price,
+                                    total_price, order_date)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (
+                self.product_select.currentText(),
+                self.current_product_price,
+                quantity,
+                self.customer_select.currentText(),
+                self.customer_phone.text().replace("📞 Telefonnummer: ", "").strip(),
+                self.customer_address.text().replace("📍 Adresse: ", "").strip(),
+                self.service_select.currentText(),
+                self.current_service_price,
+                total,
+                order_date
+            ))
+
+            conn.commit()
+            conn.close()
+            QMessageBox.information(self, "✅ Erfolg!", "Ihre Bestellung wurde erfolgreich aufgegeben.")
+
+        except sqlite3.Error as db_error:
+            QMessageBox.warning(self, "⚠️ Datenbankfehler", f"Datenbankfehler:\n{db_error}")
+
+        except Exception as e:
+            QMessageBox.warning(self, "⚠️ Unerwarteter Fehler", f"Unerwarteter Fehler:\n{e}")
