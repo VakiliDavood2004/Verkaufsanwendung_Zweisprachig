@@ -42,3 +42,29 @@ class OrderManager(QWidget):
 
         self.setLayout(layout)
         self.load_orders()  # Bestellungen während der Ausführung anzeigen
+    def load_orders(self):
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, product, product_quantity, customer, total_price, order_date FROM orders")
+        orders = cursor.fetchall()
+        conn.close()
+
+        self.table.setRowCount(len(orders))
+        self.order_data = {}  # IDs für Lösch- und Bearbeitungsoperationen speichern
+
+        for row, order in enumerate(orders):
+            order_id, product, quantity, customer, total_price, order_date = order
+            self.order_data[row] = order_id
+            self.table.setItem(row, 0, QTableWidgetItem(product))
+            self.table.setItem(row, 1, QTableWidgetItem(str(quantity)))
+            self.table.setItem(row, 2, QTableWidgetItem(customer))
+            self.table.setItem(row, 3, QTableWidgetItem(str(total_price)))
+            self.table.setItem(row, 4, QTableWidgetItem(order_date))
+
+    def load_selected_order(self):
+        selected_row = self.table.currentRow()
+        if selected_row != -1:
+            self.product_input.setText(self.table.item(selected_row, 0).text())
+            self.quantity_input.setText(self.table.item(selected_row, 1).text())
+            self.customer_input.setText(self.table.item(selected_row, 2).text())
+            self.total_price_input.setText(self.table.item(selected_row, 3).text())
