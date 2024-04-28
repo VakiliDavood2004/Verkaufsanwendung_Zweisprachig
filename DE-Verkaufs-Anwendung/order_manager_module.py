@@ -42,6 +42,7 @@ class OrderManager(QWidget):
 
         self.setLayout(layout)
         self.load_orders()  # Bestellungen während der Ausführung anzeigen
+
     def load_orders(self):
         conn = sqlite3.connect("sales.db")
         cursor = conn.cursor()
@@ -68,3 +69,51 @@ class OrderManager(QWidget):
             self.quantity_input.setText(self.table.item(selected_row, 1).text())
             self.customer_input.setText(self.table.item(selected_row, 2).text())
             self.total_price_input.setText(self.table.item(selected_row, 3).text())
+
+    def update_order(self):
+        selected_row = self.table.currentRow()
+        if selected_row == -1:
+            QMessageBox.warning(self, "⚠️ Fehler", "⚠️ Bitte wählen Sie eine Bestellung aus!")
+            return
+
+        order_id = self.order_data[selected_row]
+        product = self.product_input.text()
+        quantity = self.quantity_input.text()
+        customer = self.customer_input.text()
+        total_price = self.total_price_input.text()
+
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("UPDATE orders SET product=?, product_quantity=?, customer=?, total_price=? WHERE id=?",
+                       (product, quantity, customer, total_price, order_id))
+        conn.commit()
+        conn.close()
+
+        QMessageBox.information(self, "✅ Erfolg!", "✅ Die Bestellung wurde erfolgreich bearbeitet")
+        self.load_orders()  # Tabelle aktualisieren
+
+    def delete_order(self):
+        selected_row = self.table.currentRow()
+        if selected_row == -1:
+            QMessageBox.warning(self, "⚠️ Fehler", "⚠️ Bitte wählen Sie eine Bestellung aus!")
+            return
+
+        order_id = self.order_data[selected_row]
+
+        reply = QMessageBox.question(self, "⚠️ Löschbestätigung", "⚠️ Sind Sie sicher, dass Sie die Bestellung löschen möchten?",
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            conn = sqlite3.connect("sales.db")
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM orders WHERE id=?", (order_id,))
+            conn.commit()
+            conn.close()
+
+            QMessageBox.information(self, "✅ Success!", "✅ The order has been successfully deleted")
+            self.load_orders()  # Tabelle aktualisieren
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = OrderManager()
+    window.show()
+    sys.exit(app.exec())
