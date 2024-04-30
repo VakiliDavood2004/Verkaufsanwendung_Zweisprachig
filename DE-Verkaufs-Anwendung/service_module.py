@@ -25,3 +25,17 @@ class ServiceForm(QWidget):
         main_layout.addLayout(form_layout)
         main_layout.addWidget(submit_button)
         self.setLayout(main_layout)
+    def init_db(self):
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS services (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                price TEXT NOT NULL,
+                description TEXT
+            )
+        """)
+        conn.commit()
+        conn.close()
+
