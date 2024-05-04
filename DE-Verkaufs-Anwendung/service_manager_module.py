@@ -40,3 +40,49 @@ class ServiceManager(QWidget):
 
         self.setLayout(layout)
         self.load_services()  # Informationen beim Programmstart anzeigen
+    def load_services(self):
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, name, price, description FROM services")
+        services = cursor.fetchall()
+        conn.close()
+
+        self.table.setRowCount(len(services))  # Anzahl der Zeilen festlegen
+        self.table.setColumnCount(3)
+
+        self.service_data = {}  # IDs für Lösch- und Bearbeitungsoperationen speichern
+
+        for row, service in enumerate(services):
+            service_id, name, price, description = service
+            self.service_data[row] = service_id  # ID zur Verwendung bei Bearbeitungs- und Löschoperationen speichern
+            self.table.setItem(row, 0, QTableWidgetItem(name))
+            self.table.setItem(row, 1, QTableWidgetItem(str(price)))
+            self.table.setItem(row, 2, QTableWidgetItem(description))
+
+    def load_selected_service(self):
+        selected_row = self.table.currentRow()
+        if selected_row != -1:
+            self.name_input.setText(self.table.item(selected_row, 0).text())
+            self.price_input.setText(self.table.item(selected_row, 1).text())
+            self.description_input.setText(self.table.item(selected_row, 2).text())
+
+    def update_service(self):
+        selected_row = self.table.currentRow()
+        if selected_row == -1:
+            QMessageBox.warning(self, "Fehler", "Bitte wählen Sie eine Dienstleistung aus!")
+            return
+
+        service_id = self.service_data[selected_row]
+        name = self.name_input.text()
+        price = self.price_input.text()
+        description = self.description_input.text()
+
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("UPDATE services SET name=?, price=?, description=? WHERE id=?",
+                       (name, price, description, service_id))
+        conn.commit()
+        conn.close()
+
+        QMessageBox.information(self, "Erfolg!", "Die Dienstleistung wurde erfolgreich bearbeitet.")
+        self.load_services()  # Tabelle aktualisieren
