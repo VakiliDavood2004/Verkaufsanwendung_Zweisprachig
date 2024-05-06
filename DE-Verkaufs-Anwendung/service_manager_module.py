@@ -40,6 +40,7 @@ class ServiceManager(QWidget):
 
         self.setLayout(layout)
         self.load_services()  # Informationen beim Programmstart anzeigen
+
     def load_services(self):
         conn = sqlite3.connect("sales.db")
         cursor = conn.cursor()
@@ -86,3 +87,28 @@ class ServiceManager(QWidget):
 
         QMessageBox.information(self, "Erfolg!", "Die Dienstleistung wurde erfolgreich bearbeitet.")
         self.load_services()  # Tabelle aktualisieren
+
+    def delete_service(self):
+        selected_row = self.table.currentRow()
+        if selected_row == -1:
+            QMessageBox.warning(self, "Error", "Please select a service!")
+            return
+
+        service_id = self.service_data[selected_row]
+
+        reply = QMessageBox.question(self, "Löschbestätigung", "Sind Sie sicher, dass Sie diese Dienstleistung löschen möchten?",
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            conn = sqlite3.connect("sales.db")
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM services WHERE id=?", (service_id,))
+            conn.commit()
+            conn.close()
+
+            QMessageBox.information(self, "Erfolg!", "Die Dienstleistung wurde erfolgreich gelöscht.")
+            self.load_services()  # Tabelle aktualisieren
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = ServiceManager()
+    window.show()
+    sys.exit(app.exec())
