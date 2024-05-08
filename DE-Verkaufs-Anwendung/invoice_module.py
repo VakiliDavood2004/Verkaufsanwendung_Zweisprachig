@@ -29,3 +29,15 @@ class InvoiceForm(QWidget):
         for row_idx, order in enumerate(orders):
             for col_idx, data in enumerate(order):
                 self.table.setItem(row_idx, col_idx, QTableWidgetItem(str(data)))
+    def show_receipt(self, row, _):
+        order_id = self.table.item(row, 0).text()
+
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT product, product_price, product_quantity, customer, customer_phone, customer_address,
+                   service, service_price, total_price, order_date
+            FROM orders WHERE id = ?
+        """, (order_id,))
+        order = cursor.fetchone()
+        conn.close()
