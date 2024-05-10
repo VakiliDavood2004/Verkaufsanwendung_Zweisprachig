@@ -29,6 +29,7 @@ class InvoiceForm(QWidget):
         for row_idx, order in enumerate(orders):
             for col_idx, data in enumerate(order):
                 self.table.setItem(row_idx, col_idx, QTableWidgetItem(str(data)))
+
     def show_receipt(self, row, _):
         order_id = self.table.item(row, 0).text()
 
@@ -41,3 +42,30 @@ class InvoiceForm(QWidget):
         """, (order_id,))
         order = cursor.fetchone()
         conn.close()
+
+        if order:
+            receipt = f"""
+            🧾 **Bestellquittung**
+            📅 Bestelldatum: {order[9]}
+            👤 Kunde / Kundin: {order[3]}
+            📞 Telefonnummer: {order[4]}
+            📍  Adresse: {order[5]}
+            --------------------------------
+            🛍️ Produkt : {order[0]}
+            💰 Produktpreis: {order[1]} Euro
+            📦 Produktmenge: {order[2]}
+            --------------------------------
+            🔧 Service: {order[6]}
+            💰 Dienstleistungspreis: {order[7]} Euro
+            --------------------------------
+            💳 **Gesamtbetrag:** {order[8]} Euro
+            """
+            QMessageBox.information(self, "Bestellquittung 📜", receipt)
+        else:
+            QMessageBox.warning(self, "⚠️ Fehler", "Angeforderte Bestellung nicht gefunden!")
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = InvoiceForm()
+    window.show()
+    sys.exit(app.exec())
