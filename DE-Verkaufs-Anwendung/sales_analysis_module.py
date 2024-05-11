@@ -1,0 +1,23 @@
+import sqlite3
+import sys
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QTextEdit, QPushButton
+
+class SalesAnalysis(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("📊 Verkaufsanalyse")
+        self.resize(500, 400)
+        
+        layout = QVBoxLayout()
+        
+        self.text_area = QTextEdit()
+        self.text_area.setReadOnly(True)  # Nur-Anzeige-Daten, keine Bearbeitungsfunktion
+        layout.addWidget(QLabel("📊 Analytischer Verkaufsbericht"))
+        layout.addWidget(self.text_area)
+
+        refresh_button = QPushButton("🔄 Bericht aktualisieren")
+        refresh_button.clicked.connect(self.load_data)
+        layout.addWidget(refresh_button)
+
+        self.setLayout(layout)
+        self.load_data()  # Daten beim Start laden
