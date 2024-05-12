@@ -21,3 +21,10 @@ class SalesAnalysis(QWidget):
 
         self.setLayout(layout)
         self.load_data()  # Daten beim Start laden
+    def load_data(self):
+        """ Verkaufsanalyse abrufen und anzeigen """
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT product, SUM(product_quantity), SUM(total_price) FROM orders GROUP BY product")
+        products = cursor.fetchall()
+        conn.close()
