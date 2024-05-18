@@ -26,6 +26,7 @@ class ReportForm(QWidget):
 
         self.setLayout(layout)
         self.load_data()  # Daten beim Programmstart laden
+
     def load_data(self):
         """ Bestellinformationen aus der Datenbank abrufen und die Tabelle aktualisieren """
         conn = sqlite3.connect("sales.db")
@@ -35,3 +36,13 @@ class ReportForm(QWidget):
         conn.close()
 
         self.table.setRowCount(len(orders))
+
+        for row_idx, order in enumerate(orders):
+            for col_idx, data in enumerate(order):
+                self.table.setItem(row_idx, col_idx, QTableWidgetItem(str(data)))
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = ReportForm()
+    window.show()
+    sys.exit(app.exec())
