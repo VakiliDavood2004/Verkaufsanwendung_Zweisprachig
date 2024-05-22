@@ -89,3 +89,16 @@ class AdvancedCalculator(QWidget):
         layout.addWidget(self.display)
         layout.addLayout(grid)
         self.setLayout(layout)
+    def on_click(self, text):
+        if text == 'C':
+            self.display.clear()
+        elif text == '=':
+            result = safe_eval(self.display.text())
+            self.display.setText(result)
+        else:
+            current = self.display.text()
+            if text in ['Sinus', 'Kosinus', 'Tangens', 'Logarithmus', 'Quadratwurzel']:
+                current += f"{text}("
+            else:
+                current += text
+            self.display.setText(current)
