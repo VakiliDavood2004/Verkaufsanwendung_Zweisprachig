@@ -89,6 +89,7 @@ class AdvancedCalculator(QWidget):
         layout.addWidget(self.display)
         layout.addLayout(grid)
         self.setLayout(layout)
+
     def on_click(self, text):
         if text == 'C':
             self.display.clear()
@@ -102,3 +103,22 @@ class AdvancedCalculator(QWidget):
             else:
                 current += text
             self.display.setText(current)
+
+    def keyPressEvent(self, event: QKeyEvent):
+        key = event.text()
+        if key == '\r' or key == '=':
+            self.on_click('=')
+        elif key.lower() == 'c':
+            self.on_click('C')
+        elif key in '0123456789.+-*/()^':
+            self.on_click(key)
+        elif key.lower() == 's':
+            self.on_click('Sinus(')
+        elif key.lower() == 't':
+            self.on_click('Tangens(')
+        elif key.lower() == 'l':
+            self.on_click('Logarithmus(')
+        elif key.lower() == 'r':
+            self.on_click('Quadratwurzel(')
+        else:
+            super().keyPressEvent(event)
