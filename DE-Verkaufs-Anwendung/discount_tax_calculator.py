@@ -35,3 +35,40 @@ class DiscountTaxCalculator(QWidget):
         layout.addWidget(self.calc_button)
         layout.addWidget(self.result_label)
         self.setLayout(layout)
+    def apply_styles(self):
+        self.setStyleSheet("""
+            QWidget {
+                background-color: #f7f9fc;
+                font-family: Vazir, Tahoma;
+            }
+
+            QLineEdit {
+                background-color: #ffffff;
+                border: 1px solid #bdc3c7;
+                border-radius: 8px;
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            QPushButton {
+                background-color: #3498db;
+                color: white;
+                font-size: 15px;
+                padding: 10px;
+                border-radius: 8px;
+            }
+
+            QPushButton:hover {
+                background-color: #2980b9;
+            }
+
+            QLabel {
+                background-color: #ffffff;
+                border: 1px solid #95a5a6;
+                border-radius: 6px;
+                padding: 10px;
+                font-size: 14px;
+                margin-top: 10px;
+            }
+        """)
+
