@@ -35,6 +35,7 @@ class DiscountTaxCalculator(QWidget):
         layout.addWidget(self.calc_button)
         layout.addWidget(self.result_label)
         self.setLayout(layout)
+
     def apply_styles(self):
         self.setStyleSheet("""
             QWidget {
@@ -72,3 +73,25 @@ class DiscountTaxCalculator(QWidget):
             }
         """)
 
+    def calculate(self):
+        try:
+            base = float(self.price_input.text())
+            discount = float(self.discount_input.text()) if self.discount_input.text().strip() else 0
+            tax = float(self.tax_input.text()) if self.tax_input.text().strip() else 0
+
+            # Standardberechnungen
+            discount_amount = base * discount / 100
+            price_after_discount = base - discount_amount
+            tax_amount = price_after_discount * tax / 100
+            final_price = price_after_discount - tax_amount
+
+            self.result_label.setText(
+                f"""
+Grundpreis 💰: {base:,.0f} Euro  
+Rabatt 🎁: {discount}% → -{discount_amount:,.0f} Euro  
+Steuer 🧾: {tax}% → +{tax_amount:,.0f} Euro  
+———————————  
+    Endbetrag ✅: {final_price:,.0f} Euro
+""")
+        except:
+            self.result_label.setText("Bitte geben Sie nur gültige Zahlen ein. ❌")
