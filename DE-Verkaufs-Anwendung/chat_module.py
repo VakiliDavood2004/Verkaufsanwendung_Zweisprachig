@@ -60,3 +60,45 @@ class ChatWidget(QWidget):
         layout.addWidget(self.chat_area)
         layout.addLayout(input_layout)
         self.setLayout(layout)
+    def send_message(self):
+        user_msg = self.input_field.text().strip()
+        if not user_msg:
+            return
+
+        self.add_message(user_msg, sender="user")
+        self.input_field.clear()
+
+        bot_reply = self.generate_reply(user_msg)
+        self.add_message(bot_reply, sender="bot")
+
+    def add_message(self, text, sender):
+        label = QLabel(text)
+        label.setWordWrap(True)
+        label.setMaximumWidth(280)
+
+        if sender == "user":
+            label.setStyleSheet("""
+                background-color: #dcf8c6;
+                border-radius: 10px;
+                padding: 8px;
+                margin: 5px;
+                color: black;
+            """)
+            alignment = Qt.AlignRight
+        else:
+            label.setStyleSheet("""
+                background-color: #e5e5ea;
+                border-radius: 10px;
+                padding: 8px;
+                margin: 5px;
+                color: black;
+            """)
+            alignment = Qt.AlignLeft
+
+        msg_layout = QHBoxLayout()
+        msg_layout.addWidget(label)
+        msg_layout.setAlignment(alignment)
+
+        wrapper = QFrame()
+        wrapper.setLayout(msg_layout)
+        self.chat_content.addWidget(wrapper)
