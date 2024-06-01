@@ -60,6 +60,7 @@ class ChatWidget(QWidget):
         layout.addWidget(self.chat_area)
         layout.addLayout(input_layout)
         self.setLayout(layout)
+
     def send_message(self):
         user_msg = self.input_field.text().strip()
         if not user_msg:
@@ -102,3 +103,6 @@ class ChatWidget(QWidget):
         wrapper = QFrame()
         wrapper.setLayout(msg_layout)
         self.chat_content.addWidget(wrapper)
+
+    def generate_reply(self, user_msg):
+        return "Hallo, ich bin ein Roboter mit künstlicher Intelligenz, der dafür entwickelt wurde, Ihre Fragen zu beantworten. Ich werde jedoch bald gestartet und kann derzeit Ihre Fragen nicht beantworten."
