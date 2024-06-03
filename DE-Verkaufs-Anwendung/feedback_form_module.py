@@ -66,3 +66,80 @@ class FeedbackForm(QWidget):
         layout.addWidget(self.status)
         layout.addWidget(self.feedback_viewer)
         self.setLayout(layout)
+
+    def apply_styles(self):
+        self.setStyleSheet("""
+            QWidget {
+                background-color: #f7f9fc;
+                font-family: Vazir, Tahoma;
+            }
+
+            QLineEdit {
+                background-color: #ffffff;
+                border: 1px solid #bdc3c7;
+                border-radius: 8px;
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            QLabel {
+                font-size: 14px;
+                margin-top: 8px;
+            }
+
+            QPushButton {
+                background-color: #2ecc71;
+                color: white;
+                font-size: 14px;
+                padding: 6px;
+                border-radius: 6px;
+            }
+
+            QPushButton:checked {
+                background-color: #27ae60;
+                font-weight: bold;
+            }
+
+            QPushButton:hover {
+                background-color: #28b463;
+            }
+
+            QTextEdit {
+                background-color: #ffffff;
+                border: 1px solid #bdc3c7;
+                border-radius: 6px;
+                padding: 8px;
+                font-size: 13px;
+                color: #2c3e50;
+            }
+        """)
+
+    def select_score(self):
+        sender = self.sender()
+        for btn in self.score_buttons:
+            btn.setChecked(False)
+        sender.setChecked(True)
+
+    def submit_feedback(self):
+        text = self.input_text.text().strip()
+        score = None
+        for btn in self.score_buttons:
+            if btn.isChecked():
+                score = int(btn.text())
+
+        if not text or score is None:
+            QMessageBox.warning(self, "Warnung", "Bitte geben Sie Ihren Kommentar und Ihre Bewertung ein.")
+            return
+
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO feedback (text, score, created_at) VALUES (?, ?, ?)",
+                       (text, score, now))
+        conn.commit()
+        conn.close()
+
+        self.status.setText(f"Feedback mit der Bewertung {score} wurde übermittelt. ✅")
+        self.input_text.clear()
+        for btn in self.score_buttons:
+            btn.setChecked(False)
