@@ -143,3 +143,26 @@ class FeedbackForm(QWidget):
         self.input_text.clear()
         for btn in self.score_buttons:
             btn.setChecked(False)
+
+    def toggle_feedback_view(self):
+        if self.feedback_viewer.isVisible():
+            self.feedback_viewer.hide()
+            self.view_btn.setText("Kommentare anzeigen 📋")
+        else:
+            self.load_feedback_entries()
+            self.feedback_viewer.show()
+            self.view_btn.setText("zurückkehren ⬅️")
+
+    def load_feedback_entries(self):
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT text, score, created_at FROM feedback ORDER BY created_at DESC")
+        rows = cursor.fetchall()
+        conn.close()
+
+        content = ""
+        for text, score, date in rows:
+            content += f"🕓 {date}\n⭐ Bewertung: {score}/5\n🗨 Kommentar: {text}\n\n"
+        if not content:
+            content = "Es wurden keine Kommentare abgegeben."
+        self.feedback_viewer.setText(content)
