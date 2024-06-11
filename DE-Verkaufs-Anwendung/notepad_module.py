@@ -65,3 +65,27 @@ class Notepad(QWidget):
 
         self.setLayout(main_layout)
 
+    def load_notes(self):
+        self.note_list.clear()
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, title FROM notes ORDER BY created_at DESC")
+        for id_, title in cursor.fetchall():
+            self.note_list.addItem(f"{id_}: {title}")
+        conn.close()
+
+    def display_note(self, item):
+        note_id = int(item.text().split(":")[0])
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT title, content FROM notes WHERE id=?", (note_id,))
+        result = cursor.fetchone()
+        conn.close()
+
+        if result:
+            self.title_input.setText(result[0])
+            self.text_area.setText(result[1])
+            self.current_note_id = note_id
+        else:
+            QMessageBox.warning(self, "Fehler ❌", "Notiz nicht gefunden.")
+
