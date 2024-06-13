@@ -89,3 +89,45 @@ class Notepad(QWidget):
         else:
             QMessageBox.warning(self, "Fehler ❌", "Notiz nicht gefunden.")
 
+    def save_note(self):
+        title = self.title_input.text().strip()
+        content = self.text_area.toPlainText().strip()
+
+        if not title:
+            QMessageBox.warning(self, "Warnung", "Notiztitel darf nicht leer sein!")
+            return
+
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        if hasattr(self, "current_note_id"):
+            cursor.execute("UPDATE notes SET title=?, content=? WHERE id=?", (title, content, self.current_note_id))
+        else:
+            cursor.execute("INSERT INTO notes (title, content, created_at) VALUES (?, ?, ?)", (title, content, now))
+            self.current_note_id = cursor.lastrowid
+
+        conn.commit()
+        conn.close()
+        self.load_notes()
+        QMessageBox.information(self, "Gespeichert", "Die Notiz wurde erfolgreich gespeichert!")
+
+    def delete_note(self):
+        if hasattr(self, "current_note_id"):
+            confirm = QMessageBox.question(self, "🗑️ Notiz löschen", "⚠️ Sind Sie sicher??", QMessageBox.Yes | QMessageBox.No)
+            if confirm == QMessageBox.Yes:
+                conn = sqlite3.connect("sales.db")
+                cursor = conn.cursor()
+                cursor.execute("DELETE FROM notes WHERE id=?", (self.current_note_id,))
+                conn.commit()
+                conn.close()
+                self.new_note()
+                self.load_notes()
+        else:
+            QMessageBox.warning(self, "❌ Löschen nicht möglich", "⚠️ Es wurde keine Notiz ausgewählt")
+
+    def new_note(self):
+        self.title_input.clear()
+        self.text_area.clear()
+        if hasattr(self, "current_note_id"):
+            del self.current_note_id
