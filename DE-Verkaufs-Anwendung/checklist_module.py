@@ -52,3 +52,58 @@ class Checklist(QWidget):
         layout.addLayout(btn_layout)
         self.setLayout(layout)
 
+    def apply_styles(self):
+        self.setStyleSheet("""
+            QWidget {
+                background-color: #ecf0f1;
+                font-family: Vazir, Tahoma;
+            }
+
+            QLineEdit {
+                background-color: #ffffff;
+                border: 1px solid #bdc3c7;
+                border-radius: 8px;
+                padding: 8px;
+                font-size: 15px;
+            }
+
+            QListWidget {
+                background-color: #fdfdfd;
+                border: 1px solid #bdc3c7;
+                border-radius: 6px;
+                font-size: 14px;
+            }
+
+            QPushButton {
+                background-color: #1abc9c;
+                border-radius: 10px;
+                padding: 8px 16px;
+                font-size: 14px;
+                color: white;
+            }
+
+            QPushButton:hover {
+                background-color: #16a085;
+            }
+        """)
+
+    def load_tasks(self):
+        self.task_list.clear()
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, text, done FROM tasks ORDER BY id DESC")
+        for id_, text, done in cursor.fetchall():
+            item = QListWidgetItem(text)
+            item.setData(Qt.UserRole, id_)
+            item.setFlags(item.flags() | Qt.ItemIsUserCheckable | Qt.ItemIsEnabled | Qt.ItemIsSelectable)
+            item.setCheckState(Qt.Checked if done else Qt.Unchecked)
+
+            if done:
+                item.setForeground(Qt.darkGray)
+                font = item.font()
+                font.setStrikeOut(True)
+                item.setFont(font)
+
+            self.task_list.addItem(item)
+        conn.close()
+
