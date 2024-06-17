@@ -107,3 +107,43 @@ class Checklist(QWidget):
             self.task_list.addItem(item)
         conn.close()
 
+    def add_task(self):
+        text = self.input_field.text().strip()
+        if not text:
+            return
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO tasks (text) VALUES (?)", (text,))
+        conn.commit()
+        conn.close()
+        self.input_field.clear()
+        self.load_tasks()
+
+    def update_task_status(self, item):
+        task_id = item.data(Qt.UserRole)
+        new_state = 1 if item.checkState() == Qt.Checked else 0
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("UPDATE tasks SET done=? WHERE id=?", (new_state, task_id))
+        conn.commit()
+        conn.close()
+        self.load_tasks()
+
+    def delete_selected(self):
+        item = self.task_list.currentItem()
+        if item:
+            task_id = item.data(Qt.UserRole)
+            conn = sqlite3.connect("sales.db")
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM tasks WHERE id=?", (task_id,))
+            conn.commit()
+            conn.close()
+            self.load_tasks()
+
+    def clear_tasks(self):
+        conn = sqlite3.connect("sales.db")
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM tasks")
+        conn.commit()
+        conn.close()
+        self.load_tasks()
