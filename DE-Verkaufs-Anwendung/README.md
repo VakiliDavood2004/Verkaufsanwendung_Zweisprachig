@@ -1,8 +1,104 @@
+# 🇩🇪 Verkaufs- und Bestellverwaltungssystem
 
+Eine leistungsstarke Desktop-Anwendung zur Verwaltung von Bestellungen, Kunden, Produkten und Dienstleistungen – mit moderner grafischer Benutzeroberfläche und integrierter lokaler Datenbank.  
+Entwickelt mit **Python**, **PyQt5** und **SQLite** – ideal für kleine und mittelständische Unternehmen.
 
+---
 
+## 🚀 Hauptfunktionen
 
-# 🛍️ Sales and Order Management System
+- Erfassung von Bestellungen mit vollständigen Details (Produkte, Dienstleistungen, Kunden)  
+- Automatische Berechnung des Gesamtbetrags (Produkt × Menge + Dienstleistungen)  
+- Verwaltung von Kunden-, Produkt- und Dienstleistungsdaten  
+- Erstellung offizieller Rechnungen und detaillierter Verkaufsberichte  
+- Integrierte Tools wie Taschenrechner, Notizblock, Kalender und Chat-Assistent  
+- Einfache, schnelle und erweiterbare Benutzeroberfläche – auch für nicht-technische Nutzer geeignet  
+
+---
+
+## 🧩 Modulübersicht
+
+| Modulname | Beschreibung |
+|-----------|--------------|
+| `main.py` | Einstiegspunkt der Anwendung; lädt das Hauptfenster |
+| `order_module.py` | Bestellformular mit Preisberechnung |
+| `product_module.py` | Hinzufügen und Bearbeiten von Produktinformationen |
+| `customer_module.py` | Hinzufügen und Bearbeiten von Kundendaten |
+| `service_module.py` | Hinzufügen und Bearbeiten von Dienstleistungen |
+| `order_manager_module.py` | Verwaltung von Bestellungen mit Such- und Löschfunktion |
+| `product_list_module.py` | Anzeige der Produktliste in Tabellenform |
+| `customer_manager_module.py` | Vollständige Kundenverwaltung |
+| `service_manager_module.py` | Verwaltung verfügbarer Dienstleistungen |
+| `invoice_module.py` | Erstellung offizieller Rechnungen |
+| `report_module.py` | Berichtserstellung basierend auf Filterkriterien |
+| `sales_analysis_module.py` | Statistische Verkaufsanalyse mit Diagrammen |
+| `discount_tax_calculator.py` | Berechnung von Rabatten und Steuern |
+| `advanced_calculator_module.py` | Erweiterter Taschenrechner für manuelle Berechnungen |
+| `notepad_module.py` | Interner Notizblock zum Speichern von Texten |
+| `clock_calendar_widget.py` | Anzeige von Uhrzeit und Kalender im Programm |
+| `chat_module.py` | Einfacher Chat mit Benutzer oder Assistent |
+| `feedback_form_module.py` | Formular zur Erfassung von Nutzerfeedback |
+| `help_module.py` | Benutzerhilfe für verschiedene Programmteile |
+| `delete_product_module.py` | Löschen von Produkten mit Benutzerbestätigung |
+| `user_module.py` | Benutzerverwaltung und Zugriffskontrolle (optional) |
+| `icon.ico` | Programmsymbol |
+| `sales.db` | SQLite-Datenbank mit den Haupttabellen |
+| `README.md` | Projektdokumentation für Entwickler und Nutzer |
+
+---
+
+## 🛠️ Installation und Ausführung
+
+### Voraussetzungen:
+- Python Version 3.7 oder höher  
+- PyQt5-Bibliothek  
+
+### Installation von PyQt5:
+
+```bash
+pip install PyQt5
+```
+
+### Ausführung der Anwendung:
+
+```bash
+python main.py
+```
+
+---
+
+## 📌 Hinweise zur Entwicklung
+
+- Alle Formulare basieren auf `QWidget` und lassen sich einfach in `QMainWindow` integrieren  
+- Die SQLite-Datenbank wird automatisch erstellt und ist portabel  
+- Die modulare Struktur des Codes erleichtert Wartung und Erweiterung  
+- Der Code ist übersichtlich, dokumentiert und skalierbar gestaltet  
+
+---
+
+## 👨‍💻 Entwickler
+
+**Davood Vakili**  
+Softwareentwickler mit Spezialisierung auf Python, PyQt und modernes UI-Design.  
+Offen für internationale Projekte und maßgeschneiderte Softwarelösungen für den deutschen Markt.
+
+---
+
+## 📬 Kontakt
+
+Wenn Sie dieses Projekt nützlich finden oder an einer Weiterentwicklung interessiert sind, freue ich mich über Ihre Nachricht:
+
+- 📧 E-Mail: vakili.dev@gmail.com  
+- 💼 LinkedIn: [linkedin.com/in/davoodvakili](https://linkedin.com/in/davoodvakili)  
+- 🌐 GitHub: [github.com/davoodvakili](https://github.com/davoodvakili)  
+- 🗣️ Arbeitssprachen: Persisch, Englisch, Deutsch (B1/B2-Niveau)
+
+Ich freue mich auf eine mögliche Zusammenarbeit! 
+Ich bin sehr motiviert, praktische Erfahrungen in einem deutschen Unternehmen zu sammeln und suche aktiv nach einer Praktikumsstelle im Bereich Softwareentwicklung. Besonders interessiere ich mich für moderne Technologien, dokumentierte Entwicklungsprozesse und internationale Teamarbeit. Gerne bringe ich meine Kenntnisse in Python, PyQt und UI-Design ein und bin bereit, mich weiterzuentwickeln und Neues zu lernen.
+
+---
+
+# 🇬🇧 Sales and Order Management System
 
 A powerful desktop application for managing orders, customers, products, and services — featuring a modern graphical user interface and an integrated local database.  
 Built with **Python**, **PyQt5**, and **SQLite**, ideal for small to medium-sized businesses.
