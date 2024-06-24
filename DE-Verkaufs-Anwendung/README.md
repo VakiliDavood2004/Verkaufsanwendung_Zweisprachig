@@ -1,3 +1,106 @@
+
+
+
+
+# 🛍️ Sales and Order Management System
+
+A powerful desktop application for managing orders, customers, products, and services — featuring a modern graphical user interface and an integrated local database.  
+Built with **Python**, **PyQt5**, and **SQLite**, ideal for small to medium-sized businesses.
+
+---
+
+## 🚀 Key Features
+
+- Register orders with full details including products, services, and customers  
+- Automatically calculate total amount (product × quantity + services)  
+- Manage customer, product, and service information  
+- Generate official invoices and detailed sales reports  
+- Built-in tools such as calculator, notepad, calendar, and chat assistant  
+- Simple, fast, and scalable user interface suitable for non-technical users  
+
+---
+
+## 🧩 Module Overview
+
+| Module Name | Description |
+|-------------|-------------|
+| `main.py` | Entry point of the application; loads the main window |
+| `order_module.py` | Order form with total price calculation |
+| `product_module.py` | Add and edit product information |
+| `customer_module.py` | Add and edit customer information |
+| `service_module.py` | Add and edit service information |
+| `order_manager_module.py` | Manage orders with search and delete functionality |
+| `product_list_module.py` | Display product list in table format |
+| `customer_manager_module.py` | Full customer management |
+| `service_manager_module.py` | Manage available services |
+| `invoice_module.py` | Generate official invoices for orders |
+| `report_module.py` | Generate sales reports based on filters |
+| `sales_analysis_module.py` | Analyze sales statistics with charts |
+| `discount_tax_calculator.py` | Calculate discounts and taxes for orders |
+| `advanced_calculator_module.py` | Advanced calculator for manual operations |
+| `notepad_module.py` | Internal notepad for saving notes and reminders |
+| `clock_calendar_widget.py` | Display clock and calendar inside the app |
+| `chat_module.py` | Simple chat interface with user or assistant |
+| `feedback_form_module.py` | Collect user feedback via form |
+| `help_module.py` | User guide for different sections of the app |
+| `delete_product_module.py` | Delete products with user confirmation |
+| `user_module.py` | Manage users and access levels (if multi-user setup is needed) |
+| `icon.ico` | Application icon |
+| `sales.db` | SQLite database containing core tables |
+| `README.md` | Project documentation for developers and users |
+
+---
+
+## 🛠️ Installation & Setup
+
+### Requirements:
+- Python 3.7 or higher  
+- PyQt5 library  
+
+### Install PyQt5:
+
+```bash
+pip install PyQt5
+```
+
+### Run the application:
+
+```bash
+python main.py
+```
+
+---
+
+## 📌 Development Notes
+
+- All forms are based on `QWidget` and can be easily integrated into `QMainWindow`  
+- SQLite database is auto-generated and portable across systems  
+- Modular code structure ensures easy maintenance and feature expansion  
+- Code is written with clean structure, documentation, and scalability in mind  
+
+---
+
+## 👨‍💻 Developer
+
+**Davood Vakili**  
+Software developer specialized in Python, PyQt, and modern UI design.  
+Open to collaboration on international projects and custom software solutions for the German market.
+
+---
+
+## 📬 Contact
+
+If you found this project useful or would like to collaborate on advanced versions, feel free to reach out:
+
+- 📧 Email: vakili.dev@gmail.com  
+- 💼 LinkedIn: [linkedin.com/in/davoodvakili](https://linkedin.com/in/davoodvakili)  
+- 🌐 GitHub: [github.com/davoodvakili](https://github.com/davoodvakili)  
+- 🗣️ Working languages: Persian, English, German (B1/B2 level)
+
+Looking forward to connecting and building great things together!
+
+---
+
 # 🛍️ سیستم مدیریت فروش و سفارش‌ها
 
 نرم‌افزار دسکتاپی قدرتمند برای مدیریت سفارش‌ها، مشتریان، محصولات و خدمات، با رابط کاربری گرافیکی مدرن و پایگاه داده داخلی.  
