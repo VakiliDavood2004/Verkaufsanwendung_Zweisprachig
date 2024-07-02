@@ -30,52 +30,52 @@ import feedback_form_module
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Verkaufsverwaltungsprogramm")
-        self.resize(1500, 700)
+        self.setWindowTitle("Sales Management Program")
+        self.resize(1200, 800)
 
         self.mdi_area = QMdiArea()
         self.setCentralWidget(self.mdi_area)
 
         menubar = self.menuBar()
-        product_menu = menubar.addMenu("🛒 Produktverwaltung")
-        service_menu = menubar.addMenu("🔧 Dienstleistungsverwaltung")
-        order_menu = menubar.addMenu("📋 Bestellung registrieren")
-        invoice_menu = menubar.addMenu("🖨️ Rechnung drucken")
-        report_menu = menubar.addMenu("📊 Verkaufsberichte")
-        user_menu = menubar.addMenu("👤 Benutzerverwaltung")
-        customer_menu = menubar.addMenu("🏠 Kundenverwaltung")
-        help_menu = menubar.addMenu("❓ Hilfe / Anleitung")
-        tools_menu = menubar.addMenu("🧮 Werkzeuge")
+        product_menu = menubar.addMenu("🛒 Product Management")
+        service_menu = menubar.addMenu("🔧 Service Management")
+        order_menu = menubar.addMenu("📋 Register Order")
+        invoice_menu = menubar.addMenu("🖨️ Print Invoice")
+        report_menu = menubar.addMenu("📊 Sales Reports")
+        user_menu = menubar.addMenu("👤 User Management")
+        customer_menu = menubar.addMenu("🏠 Customer Management")
+        help_menu = menubar.addMenu("❓ Help / Guide")
+        tools_menu = menubar.addMenu("🧮 Tools")
 
-        exit_action = QAction("🚪 Beenden", self)
+        exit_action = QAction("🚪 Exit", self)
         exit_action.triggered.connect(self.close_program)
         menubar.addAction(exit_action)
 
-        self.add_submenu(product_menu, "➕ Produkt hinzufügen", self.show_product_module)
-        product_menu.addAction("❌ Produkt löschen", self.show_delete_product_module)
-        self.add_submenu(product_menu, "📜 Produkte anzeigen", self.show_product_list)
-        self.add_submenu(service_menu, "➕ Dienstleistung hinzufügen", self.show_service_module)
-        self.add_submenu(service_menu, "🔄 Dienstleistungsverwaltung", self.show_service_manager)
-        self.add_submenu(order_menu, "🆕 Neue Bestellung hinzufügen", self.show_order_module)
-        self.add_submenu(order_menu, "📋 Bestellverwaltung", self.show_order_manager)
-        self.add_submenu(invoice_menu, "🖨️ Rechnung drucken", self.show_invoice_module)
-        self.add_submenu(report_menu, "📄 Verkaufsbericht anzeigen", self.show_report_module)
-        self.add_submenu(report_menu, "📊 Verkaufsanalyse", self.show_sales_analysis)
-        self.add_submenu(user_menu, "🧑‍💼 Benutzerregistrierung", self.show_user_module)
-        self.add_submenu(customer_menu, "➕ Neuen Kunden hinzufügen", self.show_customer_module)
-        self.add_submenu(customer_menu, "👥 Kundenverwaltung", self.show_customer_manager)
-        self.add_submenu(tools_menu, "🧠 Mit KI chatten", self.show_chat_window)
-        self.add_submenu(tools_menu, "📝 Professioneller Notizblock", self.show_notepad)
-        self.add_submenu(tools_menu, "📋 Kurze Checkliste", self.show_checklist)
-        self.add_submenu(tools_menu, "🔢 Steuer-/Rabattrechner", self.show_calculator_tool)
-        self.add_submenu(tools_menu, "💬 Kundenfeedback-Formular", self.show_feedback_form)
-        self.add_submenu(help_menu, "❓ Hilfe anzeigen", self.show_help_module)
+        self.add_submenu(product_menu, "➕ Add Product", self.show_product_module)
+        product_menu.addAction("❌ Delete Product", self.show_delete_product_module)
+        self.add_submenu(product_menu, "📜 Display Products", self.show_product_list)
+        self.add_submenu(service_menu, "➕ Add Service", self.show_service_module)
+        self.add_submenu(service_menu, "🔄 Service Management", self.show_service_manager)
+        self.add_submenu(order_menu, "🆕 Add New Order", self.show_order_module)
+        self.add_submenu(order_menu, "📋 Order Management", self.show_order_manager)
+        self.add_submenu(invoice_menu, "🖨️ Print Invoice", self.show_invoice_module)
+        self.add_submenu(report_menu, "📄 View Sales Report", self.show_report_module)
+        self.add_submenu(report_menu, "📊 Sales Analysis", self.show_sales_analysis)
+        self.add_submenu(user_menu, "🧑‍💼 User Registration", self.show_user_module)
+        self.add_submenu(customer_menu, "➕ Add New Customer", self.show_customer_module)
+        self.add_submenu(customer_menu, "👥 Customer Management", self.show_customer_manager)
+        self.add_submenu(tools_menu, "🧠 Chat with AI", self.show_chat_window)
+        self.add_submenu(tools_menu, "📝 Professional Notepad", self.show_notepad)
+        self.add_submenu(tools_menu, "Short Checklist", self.show_checklist)
+        self.add_submenu(tools_menu, "🔢 Tax/Discount Calculator", self.show_calculator_tool)
+        self.add_submenu(tools_menu, "💬 Customer Feedback Form", self.show_feedback_form)
+        self.add_submenu(help_menu, "View Help", self.show_help_module)
         
 
-        # Werkzeuge
-        self.add_submenu(tools_menu, "🧠 Erweiterter Rechner", self.show_advanced_calculator)
+        # Tools
+        self.add_submenu(tools_menu, "Advanced Calculator", self.show_advanced_calculator)
 
-        # Uhr und Kalender in der unteren rechten Ecke
+        # Clock and Calendar in the Bottom-Right Corner
         self.clock_frame = QFrame(self)
         self.clock_frame.resize(200, 250)
         layout = QVBoxLayout(self.clock_frame)
@@ -105,7 +105,7 @@ class MainWindow(QMainWindow):
         if method:
             action.triggered.connect(method)
         else:
-            action.triggered.connect(lambda: print(f"Operationen '{title}' Noch nicht definiert!"))
+            action.triggered.connect(lambda: print(f"Operations '{title}' Not yet defined!"))
         menu.addAction(action)
 
     def show_subwindow(self, widget):
