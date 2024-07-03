@@ -3,7 +3,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QKeyEvent
 import math
 
-# Zulässige Funktionen für die Verwendung in sicheren Berechnungen
+# Permitted Functions for Use in Secure Computations
 allowed_names = {
     name: obj for name, obj in math.__dict__.items() if not name.startswith("__")
 }
@@ -22,12 +22,12 @@ def safe_eval(expr):
         expr = expr.replace("^", "**").replace("√", "sqrt")
         return str(eval(expr, {"__builtins__": None}, allowed_names))
     except:
-        return "Fehler!"
+        return "ٌError!"
 
 class AdvancedCalculator(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Professioneller Taschenrechner")
+        self.setWindowTitle("Professional Calculator")
         self.setFixedSize(370, 520)
         self.create_ui()
 
@@ -98,7 +98,7 @@ class AdvancedCalculator(QWidget):
             self.display.setText(result)
         else:
             current = self.display.text()
-            if text in ['Sinus', 'Kosinus', 'Tangens', 'Logarithmus', 'Quadratwurzel']:
+            if text in ['sin', 'cos', 'tan', 'log', 'sqrt']:
                 current += f"{text}("
             else:
                 current += text
@@ -113,12 +113,12 @@ class AdvancedCalculator(QWidget):
         elif key in '0123456789.+-*/()^':
             self.on_click(key)
         elif key.lower() == 's':
-            self.on_click('Sinus(')
+            self.on_click('sin(')
         elif key.lower() == 't':
-            self.on_click('Tangens(')
+            self.on_click('tan(')
         elif key.lower() == 'l':
-            self.on_click('Logarithmus(')
+            self.on_click('log(')
         elif key.lower() == 'r':
-            self.on_click('Quadratwurzel(')
+            self.on_click('sqrt(')
         else:
             super().keyPressEvent(event)
