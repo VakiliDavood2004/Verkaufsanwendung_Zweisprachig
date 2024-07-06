@@ -7,25 +7,25 @@ from PyQt5.QtCore import Qt
 class DiscountTaxCalculator(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Steuer-/Rabattrechner 🔢")
+        self.setWindowTitle("Tax/Discount Calculator 🔢")
         self.setFixedSize(360, 340)
         self.setup_ui()
         self.apply_styles()
 
     def setup_ui(self):
         self.price_input = QLineEdit()
-        self.price_input.setPlaceholderText("Grundpreis (Euro)")
+        self.price_input.setPlaceholderText("Base price (Dollar)")
 
         self.discount_input = QLineEdit()
-        self.discount_input.setPlaceholderText("Rabattprozentsatz")
+        self.discount_input.setPlaceholderText("Discount percentage")
 
         self.tax_input = QLineEdit()
-        self.tax_input.setPlaceholderText("Steuerprozentsatz")
+        self.tax_input.setPlaceholderText("Tax percentage")
 
         self.result_label = QLabel("")
         self.result_label.setAlignment(Qt.AlignTop)
 
-        self.calc_button = QPushButton("Berechnen 💰")
+        self.calc_button = QPushButton("Calculate 💰")
         self.calc_button.clicked.connect(self.calculate)
 
         layout = QVBoxLayout()
@@ -79,7 +79,7 @@ class DiscountTaxCalculator(QWidget):
             discount = float(self.discount_input.text()) if self.discount_input.text().strip() else 0
             tax = float(self.tax_input.text()) if self.tax_input.text().strip() else 0
 
-            # Standardberechnungen
+            # Standard calculations
             discount_amount = base * discount / 100
             price_after_discount = base - discount_amount
             tax_amount = price_after_discount * tax / 100
@@ -87,11 +87,11 @@ class DiscountTaxCalculator(QWidget):
 
             self.result_label.setText(
                 f"""
-Grundpreis 💰: {base:,.0f} Euro  
-Rabatt 🎁: {discount}% → -{discount_amount:,.0f} Euro  
-Steuer 🧾: {tax}% → +{tax_amount:,.0f} Euro  
+Base price 💰: {base:,.0f} Dollar  
+Discount 🎁: {discount}% → -{discount_amount:,.0f} Dollar  
+Tax 🧾: {tax}% → +{tax_amount:,.0f} Dollar  
 ———————————  
-    Endbetrag ✅: {final_price:,.0f} Euro
+    Final amount ✅: {final_price:,.0f} Dollar
 """)
         except:
-            self.result_label.setText("Bitte geben Sie nur gültige Zahlen ein. ❌")
+            self.result_label.setText("Please enter only valid numbers. ❌")
