@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QFormLayout, QLabel, QLineEdi
 class CustomerForm(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Kunden registrieren")
+        self.setWindowTitle("Register customer")
         self.resize(400, 250)
         self.init_db()
         form_layout = QFormLayout()
@@ -13,11 +13,11 @@ class CustomerForm(QWidget):
         self.phone_input = QLineEdit()
         self.address_input = QLineEdit()
 
-        form_layout.addRow("Kundenname:", self.name_input)
-        form_layout.addRow("Telefonnummer:", self.phone_input)
-        form_layout.addRow("Adresse:", self.address_input)
+        form_layout.addRow("Customer Name:", self.name_input)
+        form_layout.addRow("Contact Number:", self.phone_input)
+        form_layout.addRow("Address:", self.address_input)
 
-        submit_button = QPushButton("Kunden registrieren")
+        submit_button = QPushButton("Register customer")
         submit_button.clicked.connect(self.submit_data)
 
         main_layout = QVBoxLayout()
@@ -45,7 +45,7 @@ class CustomerForm(QWidget):
         address = self.address_input.text()
 
         if not name or not phone:
-            QMessageBox.warning(self, "Fehler", "Kundenname und Telefonnummer dürfen nicht leer sein!")
+            QMessageBox.warning(self, "Error", "Customer name and contact number cannot be empty!")
             return
 
         conn = sqlite3.connect("sales.db")
@@ -55,9 +55,9 @@ class CustomerForm(QWidget):
         conn.commit()
         conn.close()
 
-        QMessageBox.information(self, "Erfolg!", "Der Kunde wurde erfolgreich registriert.")
+        QMessageBox.information(self, "Success!", "Customer was successfully registered.")
 
-        # Formularfelder löschen
+        # Clear form fields
         self.name_input.clear()
         self.phone_input.clear()
         self.address_input.clear()
