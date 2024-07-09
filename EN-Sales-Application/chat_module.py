@@ -7,12 +7,12 @@ from PyQt5.QtCore import Qt
 class ChatWidget(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Chat mit KI")
+        self.setWindowTitle("Chat with AI 💬")
         self.setFixedSize(400, 400)
         self.init_ui()
 
     def init_ui(self):
-        # Chatbereich mit Bildlauf
+        # Chat area with scroll
         self.chat_area = QScrollArea()
         self.chat_area.setWidgetResizable(True)
         self.chat_area.setStyleSheet("background-color: #f4f7f9; border: none;")
@@ -24,9 +24,9 @@ class ChatWidget(QWidget):
         content_widget.setLayout(self.chat_content)
         self.chat_area.setWidget(content_widget)
 
-        # Eingabeleiste unten
+        # Bottom input bar
         self.input_field = QLineEdit()
-        self.input_field.setPlaceholderText("Schreiben Sie Ihre Nachricht...")
+        self.input_field.setPlaceholderText("Write your message...")
         self.input_field.setStyleSheet("""
             QLineEdit {
                 font-size: 14px;
@@ -105,4 +105,4 @@ class ChatWidget(QWidget):
         self.chat_content.addWidget(wrapper)
 
     def generate_reply(self, user_msg):
-        return "Hallo, ich bin ein Roboter mit künstlicher Intelligenz, der dafür entwickelt wurde, Ihre Fragen zu beantworten. Ich werde jedoch bald gestartet und kann derzeit Ihre Fragen nicht beantworten."
+        return "Hello, I am an artificial intelligence robot designed to answer your questions. However, I will be launched soon and currently I am unable to respond to your questions." + user_msg
