@@ -5,14 +5,14 @@ from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QTableWidget, QT
 class CustomerManager(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Kundenverwaltung 👤")
+        self.setWindowTitle("Customer management 👤")
         self.resize(500, 400)
 
         layout = QVBoxLayout()
         
         self.table = QTableWidget()
         self.table.setColumnCount(3) 
-        self.table.setHorizontalHeaderLabels(["Kundenname", "Telefonnummer", "Adresse"])
+        self.table.setHorizontalHeaderLabels(["Customer Name", "Contact Number", "Address"])
         self.table.itemSelectionChanged.connect(self.load_selected_customer)
         layout.addWidget(self.table)
 
@@ -21,17 +21,17 @@ class CustomerManager(QWidget):
         self.phone_input = QLineEdit()
         self.address_input = QLineEdit()
 
-        form_layout.addRow("Kundenname:", self.name_input)
-        form_layout.addRow("Telefonnummer:", self.phone_input)
-        form_layout.addRow("Adresse:", self.address_input)
+        form_layout.addRow("Customer Name:", self.name_input)
+        form_layout.addRow("Contact Number:", self.phone_input)
+        form_layout.addRow("Address:", self.address_input)
 
         layout.addLayout(form_layout)
 
-        self.update_button = QPushButton("Kunde bearbeiten 🔄")
+        self.update_button = QPushButton("Edit customer 🔄")
         self.update_button.clicked.connect(self.update_customer)
         layout.addWidget(self.update_button)
 
-        self.delete_button = QPushButton("Kunde löschen 🗑️")
+        self.delete_button = QPushButton("Delete customer 🗑️")
         self.delete_button.clicked.connect(self.delete_customer)
         layout.addWidget(self.delete_button)
 
@@ -39,7 +39,7 @@ class CustomerManager(QWidget):
         self.load_customers()  
 
     def load_customers(self):
-        """ Abrufen der Kundenliste aus der Datenbank """
+        """ Retrieving the list of customers from the database """
         conn = sqlite3.connect("sales.db")
         cursor = conn.cursor()
         cursor.execute("SELECT id, name, phone, address FROM customers")
@@ -57,7 +57,7 @@ class CustomerManager(QWidget):
             self.table.setItem(row, 2, QTableWidgetItem(address))
 
     def load_selected_customer(self):
-        """ Ausgewählte Kundendaten im Formular anzeigen """
+        """ Display selected customer's information in the form """
         selected_row = self.table.currentRow()
         if selected_row != -1:
             self.name_input.setText(self.table.item(selected_row, 0).text())
@@ -65,10 +65,10 @@ class CustomerManager(QWidget):
             self.address_input.setText(self.table.item(selected_row, 2).text())
 
     def update_customer(self):
-        """ Bearbeiten von Kundendaten in der Datenbank """
+        """ Editing customer information in the database """
         selected_row = self.table.currentRow()
         if selected_row == -1:
-            QMessageBox.warning(self, "Fehler ⚠️", "Bitte wählen Sie einen Kunden aus!")
+            QMessageBox.warning(self, "Error ⚠️", "please select a customer!")
             return
 
         customer_id = self.customer_data[selected_row]
@@ -83,19 +83,19 @@ class CustomerManager(QWidget):
         conn.commit()
         conn.close()
 
-        QMessageBox.information(self, "Erfolg! ✅", "Der Kunde wurde erfolgreich bearbeitet.")
+        QMessageBox.information(self, "Success! ✅", "The customer was successfully edited.")
         self.load_customers()
 
     def delete_customer(self):
-        """ Kunden aus der Datenbank löschen """
+        """ Delete customer from the database """
         selected_row = self.table.currentRow()
         if selected_row == -1:
-            QMessageBox.warning(self, "Fehler ⚠️", "Bitte wählen Sie einen Kunden aus!")
+            QMessageBox.warning(self, "Error ⚠️", "Please select a customer!")
             return
 
         customer_id = self.customer_data[selected_row]
 
-        reply = QMessageBox.question(self, "Löschung bestätigen ⚠️", "Sind Sie sicher, dass Sie diesen Kunden löschen möchten?",
+        reply = QMessageBox.question(self, "Confirm deletion ⚠️", "Are you sure you want to delete this customer?",
                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if reply == QMessageBox.Yes:
             conn = sqlite3.connect("sales.db")
@@ -104,7 +104,7 @@ class CustomerManager(QWidget):
             conn.commit()
             conn.close()
 
-            QMessageBox.information(self, "Erfolg! ✅", "Der Kunde wurde erfolgreich gelöscht.")
+            QMessageBox.information(self, "Success! ✅", "Customer was successfully deleted.")
             self.load_customers() 
 
 if __name__ == "__main__":
