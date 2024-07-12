@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import Qt
 
-# Eine Feedback-Tabelle in der Datenbank erstellen (nur einmal erforderlich)
+# Create a feedback table in the database (only required once)
 conn = sqlite3.connect("sales.db")
 cursor = conn.cursor()
 cursor.execute("""
@@ -23,17 +23,17 @@ conn.close()
 class FeedbackForm(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Kundenfeedback-Formular 💬")
+        self.setWindowTitle("Customer Feedback Form 💬")
         self.setFixedSize(400, 400)
         self.setup_ui()
         self.apply_styles()
 
     def setup_ui(self):
-        self.label = QLabel("Kundenkommentar oder Vorschlag:")
+        self.label = QLabel("Customer Comment or Suggestion:")
         self.input_text = QLineEdit()
-        self.input_text.setPlaceholderText("Zum Beispiel war die Produktqualität ausgezeichnet…")
+        self.input_text.setPlaceholderText("For example, the product quality was excellent...")
 
-        self.score_label = QLabel("Gesamtbewertung:")
+        self.score_label = QLabel("Overall Rating:")
         self.score_buttons = []
         score_layout = QHBoxLayout()
         for i in range(1, 6):
@@ -43,10 +43,10 @@ class FeedbackForm(QWidget):
             self.score_buttons.append(btn)
             score_layout.addWidget(btn)
 
-        self.submit_btn = QPushButton("Feedback absenden 📤")
+        self.submit_btn = QPushButton("Submit Feedback 📤")
         self.submit_btn.clicked.connect(self.submit_feedback)
 
-        self.view_btn = QPushButton("Kommentare anzeigen 📋")
+        self.view_btn = QPushButton("View Comments")
         self.view_btn.clicked.connect(self.toggle_feedback_view)
 
         self.status = QLabel("")
@@ -128,7 +128,7 @@ class FeedbackForm(QWidget):
                 score = int(btn.text())
 
         if not text or score is None:
-            QMessageBox.warning(self, "Warnung", "Bitte geben Sie Ihren Kommentar und Ihre Bewertung ein.")
+            QMessageBox.warning(self, "Warning", "Please enter your comment and rating.")
             return
 
         now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -139,7 +139,7 @@ class FeedbackForm(QWidget):
         conn.commit()
         conn.close()
 
-        self.status.setText(f"Feedback mit der Bewertung {score} wurde übermittelt. ✅")
+        self.status.setText(f"Feedback with score {score} has been submitted. ✅")
         self.input_text.clear()
         for btn in self.score_buttons:
             btn.setChecked(False)
@@ -147,11 +147,11 @@ class FeedbackForm(QWidget):
     def toggle_feedback_view(self):
         if self.feedback_viewer.isVisible():
             self.feedback_viewer.hide()
-            self.view_btn.setText("Kommentare anzeigen 📋")
+            self.view_btn.setText("View Comments 📋")
         else:
             self.load_feedback_entries()
             self.feedback_viewer.show()
-            self.view_btn.setText("zurückkehren ⬅️")
+            self.view_btn.setText("Return ⬅️")
 
     def load_feedback_entries(self):
         conn = sqlite3.connect("sales.db")
@@ -162,7 +162,7 @@ class FeedbackForm(QWidget):
 
         content = ""
         for text, score, date in rows:
-            content += f"🕓 {date}\n⭐ Bewertung: {score}/5\n🗨 Kommentar: {text}\n\n"
+            content += f"🕓 {date}\n⭐ Score: {score}/5\n🗨 Comment: {text}\n\n"
         if not content:
-            content = "Es wurden keine Kommentare abgegeben."
+            content = "No comments have been submitted."
         self.feedback_viewer.setText(content)
