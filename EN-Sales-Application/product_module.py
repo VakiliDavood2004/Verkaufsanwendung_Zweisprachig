@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QFormLayout, QLabel, QLineEdi
 class ProductForm(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Artikelinformationen")
+        self.setWindowTitle("Item Information")
         self.resize(400, 300)
         self.init_db()
         form_layout = QFormLayout()
@@ -13,16 +13,16 @@ class ProductForm(QWidget):
         self.name_input = QLineEdit()
         self.price_input = QLineEdit()
         self.category_input = QComboBox()  
-        self.category_input.addItems(["Rohstoffe", "Industriematerialien", "Lebensmittel", "Verschiedenes"])
+        self.category_input.addItems(["Raw Materials", "Industrial Materials", "Food Products", "Miscellaneous"])
 
         self.description_input = QLineEdit()
 
-        form_layout.addRow("Artikelname:", self.name_input)
-        form_layout.addRow("Preis:", self.price_input)
-        form_layout.addRow("Kategorie:", self.category_input)
-        form_layout.addRow("Beschreibung:", self.description_input)
+        form_layout.addRow("Item Name:", self.name_input)
+        form_layout.addRow("Price:", self.price_input)
+        form_layout.addRow("Category:", self.category_input)
+        form_layout.addRow("Description:", self.description_input)
 
-        submit_button = QPushButton("Artikel registrieren")
+        submit_button = QPushButton("Register item")
         submit_button.clicked.connect(self.submit_data)
 
         main_layout = QVBoxLayout()
@@ -52,7 +52,7 @@ class ProductForm(QWidget):
         description = self.description_input.text()
 
         if not name or not price:
-            QMessageBox.warning(self, "Fehler", "Artikelname und Preis dürfen nicht leer sein!")
+            QMessageBox.warning(self, "Error", "Item name and price cannot be empty!")
             return
 
         conn = sqlite3.connect("sales.db")
@@ -64,7 +64,7 @@ class ProductForm(QWidget):
         # cursor.execute("INSERT INTO products (name, price, category, description) VALUES ('Item One', 130, 'Raw Materials', 'For testing purposes')
         QMessageBox.information(self, "Success!", "The item has been successfully registered.")
 
-        # Formularfelder nach der Registrierung löschen
+        # Clear form fields after registration
         self.name_input.clear()
         self.price_input.clear()
         self.description_input.clear()
