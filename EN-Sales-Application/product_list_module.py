@@ -5,23 +5,23 @@ from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QTableWidget, QT
 class ProductList(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Artikel anzeigen")
+        self.setWindowTitle("Display items")
         self.resize(500, 400)
 
         layout = QVBoxLayout()
         
         self.table = QTableWidget()
-        self.table.setColumnCount(4)  # Anzahl der Spalten: Artikelname, Preis, Kategorie, Beschreibung
-        self.table.setHorizontalHeaderLabels(["Artikelname", "Preis", "Kategorie", "Beschreibung"])
+        self.table.setColumnCount(4)  # Number of columns: Name, Price, Category, Description
+        self.table.setHorizontalHeaderLabels(["Item Name", "Price", "Category", "Description"])
         
         layout.addWidget(self.table)
         
-        refresh_button = QPushButton("Artikel laden")
+        refresh_button = QPushButton("Load items")
         refresh_button.clicked.connect(self.load_products)
         layout.addWidget(refresh_button)
 
         self.setLayout(layout)
-        self.load_products()  # Methode beim Programmstart aufrufen, um Informationen anzuzeigen
+        self.load_products()  # Call method to display information on program startup
 
     def load_products(self):
         conn = sqlite3.connect("sales.db")
@@ -30,11 +30,11 @@ class ProductList(QWidget):
         products = cursor.fetchall()
         conn.close()
 
-        self.table.setRowCount(len(products))  # Anzahl der Zeilen festlegen
+        self.table.setRowCount(len(products))  # Set the number of rows
 
         for row, product in enumerate(products):
             for col, item in enumerate(product):
-                self.table.setItem(row, col, QTableWidgetItem(str(item)))  # Jede Zelle initialisieren
+                self.table.setItem(row, col, QTableWidgetItem(str(item)))  # Initialize each cell
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
