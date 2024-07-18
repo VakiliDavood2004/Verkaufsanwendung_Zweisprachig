@@ -23,7 +23,7 @@ conn.close()
 class Notepad(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("📝 Professioneller Notizblock")
+        self.setWindowTitle("📝 Professional Notepad")
         self.setMinimumSize(600, 400)
         self.setup_ui()
         self.load_notes()
@@ -34,19 +34,19 @@ class Notepad(QWidget):
         self.note_list.itemClicked.connect(self.display_note)
 
         self.title_input = QLineEdit()
-        self.title_input.setPlaceholderText("📝 Notiztitel")
+        self.title_input.setPlaceholderText("📝 Note Title")
         self.title_input.setStyleSheet("font-size: 16px; padding: 6px;")
 
         self.text_area = QTextEdit()
         self.text_area.setStyleSheet("font-size: 14px; background-color: #fdfdfd;")
 
-        save_btn = QPushButton("💾 Speichern")
+        save_btn = QPushButton("💾 Save")
         save_btn.clicked.connect(self.save_note)
 
-        delete_btn = QPushButton("🗑️ Löschen")
+        delete_btn = QPushButton("🗑️ Delete")
         delete_btn.clicked.connect(self.delete_note)
 
-        new_btn = QPushButton("🆕 Neue Notiz")
+        new_btn = QPushButton("🆕 New Note")
         new_btn.clicked.connect(self.new_note)
 
         btn_layout = QHBoxLayout()
@@ -87,14 +87,14 @@ class Notepad(QWidget):
             self.text_area.setText(result[1])
             self.current_note_id = note_id
         else:
-            QMessageBox.warning(self, "Fehler ❌", "Notiz nicht gefunden.")
+            QMessageBox.warning(self, "Error ❌", "Note Not Found.")
 
     def save_note(self):
         title = self.title_input.text().strip()
         content = self.text_area.toPlainText().strip()
 
         if not title:
-            QMessageBox.warning(self, "Warnung", "Notiztitel darf nicht leer sein!")
+            QMessageBox.warning(self, "Warning", "Note title cannot be empty!")
             return
 
         conn = sqlite3.connect("sales.db")
@@ -110,11 +110,11 @@ class Notepad(QWidget):
         conn.commit()
         conn.close()
         self.load_notes()
-        QMessageBox.information(self, "Gespeichert", "Die Notiz wurde erfolgreich gespeichert!")
+        QMessageBox.information(self, "Saved", "The note has been successfully saved!")
 
     def delete_note(self):
         if hasattr(self, "current_note_id"):
-            confirm = QMessageBox.question(self, "🗑️ Notiz löschen", "⚠️ Sind Sie sicher??", QMessageBox.Yes | QMessageBox.No)
+            confirm = QMessageBox.question(self, "🗑️ Delete Note", "⚠️ Are you sure?", QMessageBox.Yes | QMessageBox.No)
             if confirm == QMessageBox.Yes:
                 conn = sqlite3.connect("sales.db")
                 cursor = conn.cursor()
@@ -124,7 +124,7 @@ class Notepad(QWidget):
                 self.new_note()
                 self.load_notes()
         else:
-            QMessageBox.warning(self, "❌ Löschen nicht möglich", "⚠️ Es wurde keine Notiz ausgewählt")
+            QMessageBox.warning(self, "❌ Deletion Impossible", "⚠️ No note has been selected")
 
     def new_note(self):
         self.title_input.clear()
