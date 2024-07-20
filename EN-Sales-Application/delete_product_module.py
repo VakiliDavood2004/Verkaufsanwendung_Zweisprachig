@@ -5,16 +5,16 @@ from PyQt5.QtWidgets import QApplication, QWidget, QFormLayout, QLabel, QLineEdi
 class DeleteProductForm(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Element löschen")
+        self.setWindowTitle("Delete item")
         self.resize(400, 150)
 
         form_layout = QFormLayout()
         self.product_id_input = QLineEdit()
-        self.product_id_input.setPlaceholderText("Produkt-ID eingeben")
+        self.product_id_input.setPlaceholderText("Enter the product ID")
 
-        form_layout.addRow("Produkt-ID:", self.product_id_input)
+        form_layout.addRow("Product ID:", self.product_id_input)
 
-        delete_button = QPushButton("Element löschen ❌")
+        delete_button = QPushButton("Delete item ❌")
         delete_button.clicked.connect(self.delete_product)
 
         main_layout = QVBoxLayout()
@@ -26,7 +26,7 @@ class DeleteProductForm(QWidget):
         product_id = self.product_id_input.text()
 
         if not product_id.isdigit():
-            QMessageBox.warning(self, "Fehler", "Bitte geben Sie eine gültige ID ein!")
+            QMessageBox.warning(self, "Error", "Please enter a valid ID!")
             return
         
         conn = sqlite3.connect("sales.db")
@@ -38,10 +38,10 @@ class DeleteProductForm(QWidget):
         conn.close()
 
         if affected_rows > 0:
-            QMessageBox.information(self, "Erfolg", "Das Element wurde erfolgreich gelöscht!")
+            QMessageBox.information(self, "Success", "The item was successfully deleted!")
             self.product_id_input.clear()
         else:
-            QMessageBox.warning(self, "Fehler", "Kein Element mit dieser ID gefunden!")
+            QMessageBox.warning(self, "Error", "No item found with this ID!")
             
 if __name__ == "__main__":
     app = QApplication(sys.argv)
