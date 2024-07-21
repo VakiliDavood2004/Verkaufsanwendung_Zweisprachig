@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import Qt
 
-# Erstellen einer Tabelle in der Datenbank
+# Creating a table in the database
 conn = sqlite3.connect("sales.db")
 cursor = conn.cursor()
 cursor.execute("""
@@ -21,7 +21,7 @@ conn.close()
 class Checklist(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Kurze Checkliste 📝")
+        self.setWindowTitle("Short checklist 📝")
         self.setFixedSize(400, 500)
         self.setup_ui()
         self.apply_styles()
@@ -29,17 +29,17 @@ class Checklist(QWidget):
 
     def setup_ui(self):
         self.input_field = QLineEdit()
-        self.input_field.setPlaceholderText("Neue Aufgabe hinzufügen...")
+        self.input_field.setPlaceholderText("Add new task...")
         self.input_field.returnPressed.connect(self.add_task)
 
         self.task_list = QListWidget()
-        self.task_list.itemChanged.connect(self.update_task_status)  # Verwendung von itemChanged anstelle von itemClicked
+        self.task_list.itemChanged.connect(self.update_task_status)  # Using itemChanged instead of itemClicked
         self.task_list.setSelectionMode(QListWidget.SingleSelection)
 
-        delete_btn = QPushButton("Ausgewählte löschen 🗑")
+        delete_btn = QPushButton("Delete selected 🗑")
         delete_btn.clicked.connect(self.delete_selected)
 
-        clear_btn = QPushButton("Alle Aufgaben löschen 🧹")
+        clear_btn = QPushButton("🧹 Clear all tasks")
         clear_btn.clicked.connect(self.clear_tasks)
 
         btn_layout = QHBoxLayout()
