@@ -19,7 +19,7 @@ class AnalogClock(QWidget):
         painter.translate(center_x, center_y)
         painter.scale(self.width() / 200.0, self.height() / 200.0)
 
-        # Zeichnen von Uhrmarkierungen
+        # Drawing clock markers
         painter.setPen(QPen(Qt.black, 2))
         for i in range(12):
             angle = i * 30 * math.pi / 180
@@ -31,17 +31,17 @@ class AnalogClock(QWidget):
 
         current_time = QDateTime.currentDateTime().time()
 
-        # Sekundenzeiger (einer Uhr)
+        # Second hand (of a clock)
         sec_angle = current_time.second() * 6 * math.pi / 180
         painter.setPen(QPen(Qt.red, 1))
         painter.drawLine(0, 0, int(80 * math.cos(sec_angle)), int(80 * math.sin(sec_angle)))
 
-        # Minutenzeiger
+        # Minute hand
         min_angle = current_time.minute() * 6 * math.pi / 180
         painter.setPen(QPen(Qt.darkBlue, 3))
         painter.drawLine(0, 0, int(60 * math.cos(min_angle)), int(60 * math.sin(min_angle)))
 
-        # Stundenzeiger
+        # Hour hand
         hour_angle = (current_time.hour() % 12 + current_time.minute() / 60) * 30 * math.pi / 180
         painter.setPen(QPen(Qt.black, 5))
         painter.drawLine(0, 0, int(40 * math.cos(hour_angle)), int(40 * math.sin(hour_angle)))
