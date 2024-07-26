@@ -5,43 +5,43 @@ from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QTableWidget, QT
 class OrderManager(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("📋 Bestellverwaltung")
+        self.setWindowTitle("📋 Order Management")
         self.resize(600, 400)
 
         layout = QVBoxLayout()
         
-        # Bestelltabelle anzeigen
+        # Order Display Table
         self.table = QTableWidget()
-        self.table.setColumnCount(5)  # Produktname, Menge, Kunde, Gesamtpreis, Datum
-        self.table.setHorizontalHeaderLabels(["Produktname", "Menge", "Kundenname", "Gesamtpreis", "Datum"])
+        self.table.setColumnCount(5)  #Product Name, Quantity, Customer, Total Price, Date
+        self.table.setHorizontalHeaderLabels(["Product Name", "Quantity", "Customer Name", "Total Price", "Date"])
         self.table.itemSelectionChanged.connect(self.load_selected_order)
         layout.addWidget(self.table)
 
-        # Bestellbearbeitungsformular
+        # Order Edit Form
         form_layout = QFormLayout()
         self.product_input = QLineEdit()
         self.quantity_input = QLineEdit()
         self.customer_input = QLineEdit()
         self.total_price_input = QLineEdit()
         
-        form_layout.addRow("Produktname", self.product_input)
-        form_layout.addRow("Menge:", self.quantity_input)
-        form_layout.addRow("Kundenname:", self.customer_input)
-        form_layout.addRow("Gesamtpreis:", self.total_price_input)
+        form_layout.addRow("Product Name:", self.product_input)
+        form_layout.addRow("Quantity:", self.quantity_input)
+        form_layout.addRow("Customer Name:", self.customer_input)
+        form_layout.addRow("Total Price:", self.total_price_input)
         
         layout.addLayout(form_layout)
 
-        # Schaltflächen 
-        self.update_button = QPushButton("🔄 Bestellung bearbeiten")
+        # Buttons
+        self.update_button = QPushButton("🔄 Edit Order")
         self.update_button.clicked.connect(self.update_order)
         layout.addWidget(self.update_button)
 
-        self.delete_button = QPushButton("🗑️ Bestellung löschen")
+        self.delete_button = QPushButton("🗑️ Delete Order")
         self.delete_button.clicked.connect(self.delete_order)
         layout.addWidget(self.delete_button)
 
         self.setLayout(layout)
-        self.load_orders()  # Bestellungen während der Ausführung anzeigen
+        self.load_orders()  # Display orders during execution
 
     def load_orders(self):
         conn = sqlite3.connect("sales.db")
@@ -51,7 +51,7 @@ class OrderManager(QWidget):
         conn.close()
 
         self.table.setRowCount(len(orders))
-        self.order_data = {}  # IDs für Lösch- und Bearbeitungsoperationen speichern
+        self.order_data = {}  # Save IDs for delete and edit operation
 
         for row, order in enumerate(orders):
             order_id, product, quantity, customer, total_price, order_date = order
@@ -73,7 +73,7 @@ class OrderManager(QWidget):
     def update_order(self):
         selected_row = self.table.currentRow()
         if selected_row == -1:
-            QMessageBox.warning(self, "⚠️ Fehler", "⚠️ Bitte wählen Sie eine Bestellung aus!")
+            QMessageBox.warning(self, "⚠️ Error", "⚠️ Please select an order!")
             return
 
         order_id = self.order_data[selected_row]
@@ -89,18 +89,18 @@ class OrderManager(QWidget):
         conn.commit()
         conn.close()
 
-        QMessageBox.information(self, "✅ Erfolg!", "✅ Die Bestellung wurde erfolgreich bearbeitet")
-        self.load_orders()  # Tabelle aktualisieren
+        QMessageBox.information(self, "✅ Success!", "✅ The order has been successfully edited")
+        self.load_orders()  # Update Table
 
     def delete_order(self):
         selected_row = self.table.currentRow()
         if selected_row == -1:
-            QMessageBox.warning(self, "⚠️ Fehler", "⚠️ Bitte wählen Sie eine Bestellung aus!")
+            QMessageBox.warning(self, "⚠️ Error", "⚠️ Please select an order!")
             return
 
         order_id = self.order_data[selected_row]
 
-        reply = QMessageBox.question(self, "⚠️ Löschbestätigung", "⚠️ Sind Sie sicher, dass Sie die Bestellung löschen möchten?",
+        reply = QMessageBox.question(self, "⚠️ Delete Confirmation", "⚠️ Are you sure you want to delete the order?",
                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if reply == QMessageBox.Yes:
             conn = sqlite3.connect("sales.db")
@@ -110,7 +110,7 @@ class OrderManager(QWidget):
             conn.close()
 
             QMessageBox.information(self, "✅ Success!", "✅ The order has been successfully deleted")
-            self.load_orders()  # Tabelle aktualisieren
+            self.load_orders()  # Update Table
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
