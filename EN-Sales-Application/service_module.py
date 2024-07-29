@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QFormLayout, QLabel, QLineEdi
 class ServiceForm(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Formular zur Eingabe von Dienstleistungsinformationen")
+        self.setWindowTitle("Service Information Entry Form")
         self.resize(400, 300)
         self.init_db()
         form_layout = QFormLayout()
@@ -14,11 +14,11 @@ class ServiceForm(QWidget):
         self.price_input = QLineEdit()
         self.description_input = QLineEdit()
 
-        form_layout.addRow("Dienstleistungsname:", self.name_input)
-        form_layout.addRow("Dienstleistungspreis:", self.price_input)
-        form_layout.addRow("Beschreibung:", self.description_input)
+        form_layout.addRow("Service name:", self.name_input)
+        form_layout.addRow("Service price:", self.price_input)
+        form_layout.addRow("Description:", self.description_input)
 
-        submit_button = QPushButton("Dienstleistung registrieren")
+        submit_button = QPushButton("Register service")
         submit_button.clicked.connect(self.submit_data)
 
         main_layout = QVBoxLayout()
@@ -46,7 +46,7 @@ class ServiceForm(QWidget):
         description = self.description_input.text()
 
         if not name or not price:
-            QMessageBox.warning(self, "Fehler", "Dienstleistungsname und Preis dürfen nicht leer sein!")
+            QMessageBox.warning(self, "Error", "Service name and price cannot be empty!")
             return
 
         conn = sqlite3.connect("sales.db")
@@ -56,7 +56,7 @@ class ServiceForm(QWidget):
         conn.commit()
         conn.close()
 
-        QMessageBox.information(self, "Erfolg!", "Dienstleistung erfolgreich registriert.")
+        QMessageBox.information(self, "Success!", "Service registered successfully.")
 
         self.name_input.clear()
         self.price_input.clear()
