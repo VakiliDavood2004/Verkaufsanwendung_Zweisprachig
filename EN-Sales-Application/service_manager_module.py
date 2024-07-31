@@ -5,41 +5,41 @@ from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QTableWidget, QT
 class ServiceManager(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Dienstleistungsverwaltung")
+        self.setWindowTitle("Service Management")
         self.resize(500, 400)
 
         layout = QVBoxLayout()
         
         self.table = QTableWidget()
-        self.table.setColumnCount(3)  # Name, Preis, Beschreibung
-        self.table.setHorizontalHeaderLabels(["Dienstleistungsname", "Preis", "Beschreibung"])
+        self.table.setColumnCount(3)  # "Name, Price, Description"
+        self.table.setHorizontalHeaderLabels(["Service Name", "Price", "Description"])
         self.table.itemSelectionChanged.connect(self.load_selected_service)
         
         layout.addWidget(self.table)
         
-        # Formular zur Bearbeitung von Dienstleistungen
+        # Service Edit Form
         form_layout = QFormLayout()
         self.name_input = QLineEdit()
         self.price_input = QLineEdit()
         self.description_input = QLineEdit()
 
-        form_layout.addRow("Dienstleistungsname:", self.name_input)
-        form_layout.addRow("Preis:", self.price_input)
-        form_layout.addRow("Beschreibung:", self.description_input)
+        form_layout.addRow("Service Name:", self.name_input)
+        form_layout.addRow("Price:", self.price_input)
+        form_layout.addRow("Description:", self.description_input)
 
         layout.addLayout(form_layout)
         
-        # Aktionsschaltflächen
-        self.update_button = QPushButton("🔄Dienstleistung bearbeiten")
+        # Action Buttons
+        self.update_button = QPushButton("🔄 Edit Service")
         self.update_button.clicked.connect(self.update_service)
         layout.addWidget(self.update_button)
 
-        self.delete_button = QPushButton("🗑️ Dienstleistung löschen")
+        self.delete_button = QPushButton("🗑️ Delete Service")
         self.delete_button.clicked.connect(self.delete_service)
         layout.addWidget(self.delete_button)
 
         self.setLayout(layout)
-        self.load_services()  # Informationen beim Programmstart anzeigen
+        self.load_services()  # Display information on program startup
 
     def load_services(self):
         conn = sqlite3.connect("sales.db")
@@ -48,14 +48,14 @@ class ServiceManager(QWidget):
         services = cursor.fetchall()
         conn.close()
 
-        self.table.setRowCount(len(services))  # Anzahl der Zeilen festlegen
+        self.table.setRowCount(len(services))  # Set number of rows
         self.table.setColumnCount(3)
 
-        self.service_data = {}  # IDs für Lösch- und Bearbeitungsoperationen speichern
+        self.service_data = {}  # Store IDs for delete and edit operations
 
         for row, service in enumerate(services):
             service_id, name, price, description = service
-            self.service_data[row] = service_id  # ID zur Verwendung bei Bearbeitungs- und Löschoperationen speichern
+            self.service_data[row] = service_id  # Store ID for use in edit and delete operations
             self.table.setItem(row, 0, QTableWidgetItem(name))
             self.table.setItem(row, 1, QTableWidgetItem(str(price)))
             self.table.setItem(row, 2, QTableWidgetItem(description))
@@ -70,7 +70,7 @@ class ServiceManager(QWidget):
     def update_service(self):
         selected_row = self.table.currentRow()
         if selected_row == -1:
-            QMessageBox.warning(self, "Fehler", "Bitte wählen Sie eine Dienstleistung aus!")
+            QMessageBox.warning(self, "Error", "Please select a service!")
             return
 
         service_id = self.service_data[selected_row]
@@ -85,8 +85,8 @@ class ServiceManager(QWidget):
         conn.commit()
         conn.close()
 
-        QMessageBox.information(self, "Erfolg!", "Die Dienstleistung wurde erfolgreich bearbeitet.")
-        self.load_services()  # Tabelle aktualisieren
+        QMessageBox.information(self, "Success!", "The service was successfully edited.")
+        self.load_services()  # Update Table
 
     def delete_service(self):
         selected_row = self.table.currentRow()
@@ -96,7 +96,7 @@ class ServiceManager(QWidget):
 
         service_id = self.service_data[selected_row]
 
-        reply = QMessageBox.question(self, "Löschbestätigung", "Sind Sie sicher, dass Sie diese Dienstleistung löschen möchten?",
+        reply = QMessageBox.question(self, "Delete Confirmation", "Are you sure you want to delete this service?",
                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if reply == QMessageBox.Yes:
             conn = sqlite3.connect("sales.db")
@@ -105,8 +105,8 @@ class ServiceManager(QWidget):
             conn.commit()
             conn.close()
 
-            QMessageBox.information(self, "Erfolg!", "Die Dienstleistung wurde erfolgreich gelöscht.")
-            self.load_services()  # Tabelle aktualisieren
+            QMessageBox.information(self, "Success!", "The service was successfully deleted.")
+            self.load_services()  # Update Table
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = ServiceManager()
