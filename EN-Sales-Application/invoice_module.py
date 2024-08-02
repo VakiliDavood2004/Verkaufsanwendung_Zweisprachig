@@ -5,14 +5,14 @@ from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QTableWidget, QT
 class InvoiceForm(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Bestellliste 📜")
+        self.setWindowTitle("List of Orders 📜")
         self.resize(600, 400)
         layout = QVBoxLayout()
         self.table = QTableWidget()
         self.table.setColumnCount(2)  
-        self.table.setHorizontalHeaderLabels(["Bestellnummer 🆔", "Kundenname 👤"])
+        self.table.setHorizontalHeaderLabels(["Order ID 🆔", "Customer Name 👤"])
         self.table.cellClicked.connect(self.show_receipt) 
-        layout.addWidget(QLabel("Liste der registrierten Bestellungen 📜"))
+        layout.addWidget(QLabel("List of Registered Orders 📜"))
         layout.addWidget(self.table)
 
         self.setLayout(layout)
@@ -45,24 +45,24 @@ class InvoiceForm(QWidget):
 
         if order:
             receipt = f"""
-            🧾 **Bestellquittung**
-            📅 Bestelldatum: {order[9]}
-            👤 Kunde / Kundin: {order[3]}
-            📞 Telefonnummer: {order[4]}
-            📍  Adresse: {order[5]}
+            🧾 **Order Receipt**
+            📅 Order Date: {order[9]}
+            👤 Customer: {order[3]}
+            📞 Phone Number: {order[4]}
+            📍  Address: {order[5]}
             --------------------------------
-            🛍️ Produkt : {order[0]}
-            💰 Produktpreis: {order[1]} Euro
-            📦 Produktmenge: {order[2]}
+            🛍️ Product : {order[0]}
+            💰 Product Price: {order[1]} Dollars
+            📦 Product Quantity: {order[2]}
             --------------------------------
             🔧 Service: {order[6]}
-            💰 Dienstleistungspreis: {order[7]} Euro
+            💰  Service Price: {order[7]} Dollars
             --------------------------------
-            💳 **Gesamtbetrag:** {order[8]} Euro
+            💳 **Total Amount:** {order[8]} Dollars
             """
-            QMessageBox.information(self, "Bestellquittung 📜", receipt)
+            QMessageBox.information(self, "Order Receipt 📜", receipt)
         else:
-            QMessageBox.warning(self, "⚠️ Fehler", "Angeforderte Bestellung nicht gefunden!")
+            QMessageBox.warning(self, "⚠️ Error", "Requested order not found!")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
