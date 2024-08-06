@@ -5,30 +5,30 @@ from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QTableWidget, QT
 class ReportForm(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("📊 Bestellbericht")
+        self.setWindowTitle("📊 Order Report")
         self.resize(800, 400)
         layout = QVBoxLayout()
 
         self.table = QTableWidget()
-        self.table.setColumnCount(10)  # Anzahl der Tabellenspalten
-        self.table.setHorizontalHeaderLabels([
-            "🆔 ID", "🛍️ Artikel", "💰 Artikelpreis", "📦 Menge", "👤 Kunde", 
-            "📞 Kontakt", "📍 Adresse", "🔧 Dienstleistung", "💰 Dienstleistungspreis", 
-            "💳 Gesamtpreis", "📅 Bestelldatum" 
+        self.table.setColumnCount(10)  # Number of table columns
+        self.table.setHorizontalHeaderLabels([ 
+            "🆔 ID", "🛍️ Item", "💰 Item Price", "📦 Quantity", "👤 Customer", "📞 Contact", 
+            "📍 Address", "🔧 Service", "💰 Service Price", "💳 Total Price", "📅 Order Date" 
         ])
-        layout.addWidget(QLabel("📊 Liste der registrierten Bestellungen"))
+
+        layout.addWidget(QLabel("📊 List of registered orders"))
         layout.addWidget(self.table)
 
-        # Tabellenaktualisierungsschaltfläche
-        refresh_button = QPushButton("🔄 Bericht aktualisieren")
+        # 🔄 Table update button
+        refresh_button = QPushButton("🔄 Update Report")
         refresh_button.clicked.connect(self.load_data)
         layout.addWidget(refresh_button)
 
         self.setLayout(layout)
-        self.load_data()  # Daten beim Programmstart laden
+        self.load_data()  # Load data when the program starts
 
     def load_data(self):
-        """ Bestellinformationen aus der Datenbank abrufen und die Tabelle aktualisieren """
+        """ Fetch order information from the database and update the table """
         conn = sqlite3.connect("sales.db")
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM orders")
