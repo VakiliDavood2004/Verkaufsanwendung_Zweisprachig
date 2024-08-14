@@ -88,10 +88,12 @@ Offen für internationale Projekte und maßgeschneiderte Softwarelösungen für 
 
 Wenn Sie dieses Projekt nützlich finden oder an einer Weiterentwicklung interessiert sind, freue ich mich über Ihre Nachricht:
 
-- 📧 E-Mail: vakili.dev@gmail.com  
-- 💼 LinkedIn: [linkedin.com/in/davoodvakili](https://linkedin.com/in/davoodvakili)  
-- 🌐 GitHub: [github.com/davoodvakili](https://github.com/davoodvakili)  
-- 🗣️ Arbeitssprachen: Persisch, Englisch, Deutsch (B1/B2-Niveau)
+## 📬 Kontakt
+
+- 📧 **E-Mail:** [vakilidavood2004@gmail.com](mailto:vakilidavood2004@gmail.com)  
+- 💼 **LinkedIn:** [Davood Vakili](https://www.linkedin.com/in/davood-vakili/)  
+- 🌐 **GitHub:** [VakiliDavood2004](https://github.com/VakiliDavood2004)
+- 🗣️ **Arbeitssprachen:** Persisch, Englisch, Deutsch (B1/B2-Niveau)
 
 Ich freue mich auf eine mögliche Zusammenarbeit! 
 Ich bin sehr motiviert, praktische Erfahrungen in einem deutschen Unternehmen zu sammeln und suche aktiv nach einer Praktikumsstelle im Bereich Softwareentwicklung. Besonders interessiere ich mich für moderne Technologien, dokumentierte Entwicklungsprozesse und internationale Teamarbeit. Gerne bringe ich meine Kenntnisse in Python, PyQt und UI-Design ein und bin bereit, mich weiterzuentwickeln und Neues zu lernen.
@@ -188,10 +190,12 @@ Open to collaboration on international projects and custom software solutions fo
 
 If you found this project useful or would like to collaborate on advanced versions, feel free to reach out:
 
-- 📧 Email: vakili.dev@gmail.com  
-- 💼 LinkedIn: [linkedin.com/in/davoodvakili](https://linkedin.com/in/davoodvakili)  
-- 🌐 GitHub: [github.com/davoodvakili](https://github.com/davoodvakili)  
-- 🗣️ Working languages: Persian, English, German (B1/B2 level)
+## 📬 Kontakt
+
+- 📧 **E-Mail:** [vakilidavood2004@gmail.com](mailto:vakilidavood2004@gmail.com)  
+- 💼 **LinkedIn:** [Davood Vakili](https://www.linkedin.com/in/davood-vakili/)  
+- 🌐 **GitHub:** [VakiliDavood2004](https://github.com/VakiliDavood2004)
+- 🗣️ **Arbeitssprachen:** Persisch, Englisch, Deutsch (B1/B2-Niveau)
 
 Looking forward to connecting and building great things together!
 
@@ -287,7 +291,9 @@ python main.py
 
 اگر این پروژه برایتان مفید بود، یا قصد توسعه و همکاری در نسخه‌های پیشرفته‌تر آن را دارید، خوشحال می‌شوم در ارتباط باشیم.
 
-- 📧 ایمیل: vakili.dev@gmail.com  
-- 💼 لینکدین: [linkedin.com/in/davoodvakili](https://linkedin.com/in/davoodvakili)  
-- 🌐 گیت‌هاب: [github.com/davoodvakili](https://github.com/davoodvakili)  
-- 🗣️ زبان‌های کاری: فارسی، انگلیسی، آلمانی (سطح B1/B2)
+## 📬 Kontakt
+
+- 📧 **E-Mail:** [vakilidavood2004@gmail.com](mailto:vakilidavood2004@gmail.com)  
+- 💼 **LinkedIn:** [Davood Vakili](https://www.linkedin.com/in/davood-vakili/)  
+- 🌐 **GitHub:** [VakiliDavood2004](https://github.com/VakiliDavood2004)
+- 🗣️ **Arbeitssprachen:** Persisch, Englisch, Deutsch (B1/B2-Niveau)

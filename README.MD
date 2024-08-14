@@ -42,9 +42,12 @@ Jede Version enthält detaillierte Modulbeschreibungen, Installationsanleitungen
 Softwareentwickler mit Spezialisierung auf Python, PyQt und mehrsprachige UI-Designs  
 Fokussiert auf internationale Zusammenarbeit und maßgeschneiderte Lösungen für den deutschen Markt
 
-- 📧 E-Mail: vakili.dev@gmail.com  
-- 💼 LinkedIn: [linkedin.com/in/davoodvakili](https://linkedin.com/in/davoodvakili)  
-- 🌐 GitHub: [github.com/davoodvakili](https://github.com/davoodvakili)
+
+## 📬 Kontakt
+
+- 📧 **E-Mail:** [vakilidavood2004@gmail.com](mailto:vakilidavood2004@gmail.com)  
+- 💼 **LinkedIn:** [Davood Vakili](https://www.linkedin.com/in/davood-vakili/)  
+- 🌐 **GitHub:** [VakiliDavood2004](https://github.com/VakiliDavood2004)
 
 ---
 
@@ -104,9 +107,11 @@ Each version contains detailed module descriptions, setup instructions, and tech
 Software developer specialized in Python, PyQt, and multilingual UI design  
 Focused on international collaboration and tailored solutions for the German market
 
-- 📧 Email: vakili.dev@gmail.com  
-- 💼 LinkedIn: [linkedin.com/in/davoodvakili](https://linkedin.com/in/davoodvakili)  
-- 🌐 GitHub: [github.com/davoodvakili](https://github.com/davoodvakili)
+## 📬 Kontakt
+
+- 📧 **E-Mail:** [vakilidavood2004@gmail.com](mailto:vakilidavood2004@gmail.com)  
+- 💼 **LinkedIn:** [Davood Vakili](https://www.linkedin.com/in/davood-vakili/)  
+- 🌐 **GitHub:** [VakiliDavood2004](https://github.com/VakiliDavood2004)
 
 ---
 
@@ -166,9 +171,11 @@ For full module breakdown and technical notes, please refer to the internal docu
 توسعه‌دهنده نرم‌افزار با تخصص در Python، PyQt و طراحی رابط کاربری چندزبانه  
 متمرکز بر همکاری‌های بین‌المللی و ارائه راه‌حل‌های سفارشی برای بازار آلمان
 
-- 📧 ایمیل: vakili.dev@gmail.com  
-- 💼 لینکدین: [linkedin.com/in/davoodvakili](https://linkedin.com/in/davoodvakili)  
-- 🌐 گیت‌هاب: [github.com/davoodvakili](https://github.com/davoodvakili)
+## 📬 Kontakt
+
+- 📧 **E-Mail:** [vakilidavood2004@gmail.com](mailto:vakilidavood2004@gmail.com)  
+- 💼 **LinkedIn:** [Davood Vakili](https://www.linkedin.com/in/davood-vakili/)  
+- 🌐 **GitHub:** [VakiliDavood2004](https://github.com/VakiliDavood2004)
 
 ---
 
